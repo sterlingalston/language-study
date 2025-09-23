@@ -1,0 +1,9 @@
+Bien, gracias.|Fine, thanks.|polite response
+Muy bien.|Very well.|positive response
+Soy de España.|I'm from Spain.|origin statement
+¡Adiós!|Goodbye!|farewell greeting
+¡Buenos días!|Good morning!|morning greeting
+¡Hola!|Hello!|general greeting
+¿Cómo te llamas?|What's your name?|introduction question
+¿De dónde eres?|Where are you from?|origin question
+¿Qué tal?|How's it going?|casual greeting

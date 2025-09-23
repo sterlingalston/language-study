@@ -1,0 +1,13 @@
+Freut mich auch!|Nice to meet you, too!|polite response
+Freut mich!|Nice to meet you!|introduction response
+Gut, danke.|Fine, thanks.|polite response
+Hallo!|Hello!|general greeting
+Hi!|Hi!|casual greeting
+Mir geht's gut.|It's going well.|positive response
+Mir geht's nicht so gut.|It's not going so well.|negative response
+Mir geht's schlecht.|It's going badly.|negative response
+Mir geht's super!|It's going great!|very positive response
+Tschüss!|Bye!|informal farewell
+Wie geht's?|How's it going?|casual greeting question
+Wie geht's dir?|How is it going?|more formal greeting question
+Wie heißt du?|What's your name?|introduction question
