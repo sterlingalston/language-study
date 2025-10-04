@@ -1,7 +1,17 @@
 {
   "permissions": {
     "allow": [
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(py extract_vocabulary.py:*)",
+      "Bash(winget:*)",
+      "Bash(choco:*)",
+      "Bash(scoop:*)",
+      "Bash(mkdir:*)",
+      "Bash(Get-ChildItem -File)",
+      "Bash(Sort-Object LastWriteTime -Descending)",
+      "Bash(Select-Object -First 20 Name, LastWriteTime)"
     ],
     "deny": [],
     "ask": []
