@@ -145,13 +145,11 @@
             </div>
 
             <div class="file-input-section">
-                <h3>Or Load from URL</h3>
-                <p>Enter a URL to a raw text file (e.g., GitHub raw link):</p>
-                <div class="url-input-container">
-                    <input type="url" id="urlInput" placeholder="https://raw.githubusercontent.com/user/repo/main/vocab.txt" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
-                    <input type="text" id="languageNameInput" placeholder="Language name (e.g., Spanish)" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
-                    <button onclick="loadFromUrl()" class="mode-btn">Load from URL</button>
-                </div>
+                <h3>Or Paste Content from GitHub</h3>
+                <p>Copy the raw text from GitHub and paste it here:</p>
+                <textarea id="pasteInput" placeholder="Paste vocabulary here (word|translation|notes)" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; min-height: 120px; font-family: monospace;"></textarea>
+                <input type="text" id="pasteLanguageName" placeholder="Language name (e.g., Spanish)" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
+                <button onclick="loadFromPaste()" class="mode-btn">Load Pasted Content</button>
             </div>
 
             <div class="mode-selection">
