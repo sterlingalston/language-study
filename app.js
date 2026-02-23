@@ -597,6 +597,12 @@ async function loadFromUrl() {
         return;
     }
 
+    // Check if we're on file:// protocol
+    if (window.location.protocol === 'file:') {
+        alert('URL loading is blocked when opening the file directly.\n\nPlease use one of these methods:\n1. Use the GitHub Pages site\n2. Copy/paste the content instead (see "Or Paste Content Directly" section)');
+        return;
+    }
+
     // Show loading state
     const button = event.target;
     const originalText = button.textContent;
@@ -608,14 +614,25 @@ async function loadFromUrl() {
 
         if (result.success) {
             app.updateLanguageGrid();
-            alert(`Successfully loaded ${result.count} vocabulary entries for ${languageName}!`);
+
+            let message = `Successfully loaded ${result.count} vocabulary entries for ${languageName}!`;
+
+            // Check if localStorage is available
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+            } catch (e) {
+                message += '\n\nNote: Data will only last this session.';
+            }
+
+            alert(message);
             urlInput.value = '';
             languageNameInput.value = '';
         } else {
-            alert(`Failed to load vocabulary: ${result.error}`);
+            alert(`Failed to load vocabulary: ${result.error}\n\nTip: Try the "Paste Content Directly" option instead.`);
         }
     } catch (error) {
-        alert(`Error loading from URL: ${error.message}`);
+        alert(`Error loading from URL: ${error.message}\n\nTip: Try the "Paste Content Directly" option instead.`);
     } finally {
         button.textContent = originalText;
         button.disabled = false;
