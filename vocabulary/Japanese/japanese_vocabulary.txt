@@ -1,2 +1,2 @@
-     1→はじめまして。 / Hajimemashite.|Nice to meet you.|polite greeting
-     2→こんにちは / Konnichiwa|Hello|general greeting
+はじめまして。 / Hajimemashite.|Nice to meet you.|polite greeting
+こんにちは / Konnichiwa|Hello|general greeting
