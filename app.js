@@ -16,14 +16,27 @@ class FlashcardApp {
     }
 
     loadLocalStorage() {
-        const stored = localStorage.getItem('languageData');
-        if (stored) {
-            this.languages = JSON.parse(stored);
+        try {
+            const stored = localStorage.getItem('languageData');
+            if (stored) {
+                this.languages = JSON.parse(stored);
+            }
+        } catch (error) {
+            console.warn('localStorage not available:', error.message);
+            // Data will only persist in memory during this session
         }
     }
 
     saveToLocalStorage() {
-        localStorage.setItem('languageData', JSON.stringify(this.languages));
+        try {
+            localStorage.setItem('languageData', JSON.stringify(this.languages));
+        } catch (error) {
+            console.warn('Could not save to localStorage:', error.message);
+            // App will still work, but data won't persist after page refresh
+            if (error.message.includes('insecure') || error.name === 'SecurityError') {
+                console.info('Tip: Use GitHub Pages or run a local server (npx serve) for data persistence');
+            }
+        }
     }
 
     parseFile(filename, content) {
@@ -636,9 +649,20 @@ function loadFromPaste() {
 
         if (cards.length > 0) {
             app.languages[languageName] = cards;
-            app.saveToLocalStorage();
+            const saved = app.saveToLocalStorage();
             app.updateLanguageGrid();
-            alert(`Successfully loaded ${cards.length} vocabulary entries for ${languageName}!`);
+
+            let message = `Successfully loaded ${cards.length} vocabulary entries for ${languageName}!`;
+
+            // Check if localStorage is available
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+            } catch (e) {
+                message += '\n\nNote: Data will only last this session (localStorage blocked when opening file directly). Use GitHub Pages for data persistence!';
+            }
+
+            alert(message);
             pasteInput.value = '';
             languageNameInput.value = '';
         } else {
