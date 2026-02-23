@@ -46,10 +46,23 @@ class FlashcardApp {
 
     async loadFromUrl(url, languageName) {
         try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+            // Try direct fetch first
+            let response;
+            try {
+                response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+            } catch (fetchError) {
+                // If direct fetch fails (CORS or insecure context), try with CORS proxy
+                console.log('Direct fetch failed, trying CORS proxy...');
+                const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+                response = await fetch(proxyUrl);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
             }
+
             const content = await response.text();
             const cards = this.parseFile(languageName, content);
 

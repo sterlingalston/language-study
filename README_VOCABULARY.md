@@ -9,6 +9,7 @@ When you have new PNG screenshots from Busuu:
 3. Type: **"process new vocabulary"**
 
 Claude will automatically:
+
 - Find new PNG files
 - Extract vocabulary entries
 - Add them to the appropriate vocabulary files
