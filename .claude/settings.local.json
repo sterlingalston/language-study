@@ -11,7 +11,10 @@
       "Bash(mkdir:*)",
       "Bash(Get-ChildItem -File)",
       "Bash(Sort-Object LastWriteTime -Descending)",
-      "Bash(Select-Object -First 20 Name, LastWriteTime)"
+      "Bash(Select-Object -First 20 Name, LastWriteTime)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ],
     "deny": [],
     "ask": []
