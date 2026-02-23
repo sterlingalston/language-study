@@ -610,33 +610,43 @@ async function loadFromUrl() {
 }
 
 function loadFromPaste() {
-    const pasteInput = document.getElementById('pasteInput');
-    const languageNameInput = document.getElementById('pasteLanguageName');
+    try {
+        const pasteInput = document.getElementById('pasteInput');
+        const languageNameInput = document.getElementById('pasteLanguageName');
 
-    const content = pasteInput.value.trim();
-    const languageName = languageNameInput.value.trim();
+        if (!pasteInput || !languageNameInput) {
+            alert('Error: Could not find input elements. Please refresh the page.');
+            return;
+        }
 
-    if (!content) {
-        alert('Please paste some vocabulary content!');
-        return;
-    }
+        const content = pasteInput.value.trim();
+        const languageName = languageNameInput.value.trim();
 
-    if (!languageName) {
-        alert('Please enter a language name!');
-        return;
-    }
+        if (!content) {
+            alert('Please paste some vocabulary content!');
+            return;
+        }
 
-    const cards = app.parseFile(languageName, content);
+        if (!languageName) {
+            alert('Please enter a language name!');
+            return;
+        }
 
-    if (cards.length > 0) {
-        app.languages[languageName] = cards;
-        app.saveToLocalStorage();
-        app.updateLanguageGrid();
-        alert(`Successfully loaded ${cards.length} vocabulary entries for ${languageName}!`);
-        pasteInput.value = '';
-        languageNameInput.value = '';
-    } else {
-        alert('No valid vocabulary entries found. Make sure format is: word|translation|notes');
+        const cards = app.parseFile(languageName, content);
+
+        if (cards.length > 0) {
+            app.languages[languageName] = cards;
+            app.saveToLocalStorage();
+            app.updateLanguageGrid();
+            alert(`Successfully loaded ${cards.length} vocabulary entries for ${languageName}!`);
+            pasteInput.value = '';
+            languageNameInput.value = '';
+        } else {
+            alert('No valid vocabulary entries found. Make sure format is: word|translation|notes');
+        }
+    } catch (error) {
+        alert(`Error: ${error.message}`);
+        console.error('loadFromPaste error:', error);
     }
 }
 
