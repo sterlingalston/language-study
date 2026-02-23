@@ -10,14 +10,21 @@ Open `index.html` in your browser to use the interactive flashcard app.
 - Click "Load Files" and select `.txt` files from your computer
 - Files are saved to browser localStorage
 
-**Method 2: Paste Content from GitHub**
-1. Go to your GitHub raw vocabulary file (e.g., `https://raw.githubusercontent.com/user/repo/main/vocab.txt`)
+**Method 2: Load from GitHub URL** (GitHub Pages only)
+1. Get the raw URL from GitHub (e.g., `https://raw.githubusercontent.com/user/repo/main/vocab.txt`)
+2. Paste the URL in the URL input field
+3. Enter a language name (e.g., "Japanese")
+4. Click "Load from URL"
+5. Note: This only works on GitHub Pages, not when opening the file directly
+
+**Method 3: Paste Content Directly** (Works everywhere)
+1. Go to your GitHub raw vocabulary file
 2. Copy all the content (Ctrl+A, Ctrl+C)
 3. Paste into the textarea on the app
 4. Enter a language name (e.g., "Japanese")
 5. Click "Load Pasted Content"
 
-**Method 3: Drag and Drop Files**
+**Method 4: Drag and Drop Files**
 - Simply drag `.txt` files onto the file input
 
 ### Vocabulary Format
