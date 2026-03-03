@@ -8,6 +8,62 @@ class FlashcardApp {
         this.showingBack = false;
         this.quizScore = 0;
         this.quizAnswered = 0;
+        this.audioCache = {};
+    }
+
+    // Get Google Translate TTS URL
+    getTTSUrl(text, language) {
+        // Map language names to Google Translate language codes (native pronunciation)
+        const langMap = {
+            'japanese': 'ja',
+            'german': 'de',
+            'spanish': 'es',
+            'chinese': 'zh-CN',
+            'mandarin': 'zh-CN',
+            'français': 'fr',
+            'french': 'fr',
+            'italiano': 'it',
+            'italian': 'it'
+        };
+
+        // Extract base language name (e.g., "Japanese - hiragana chart" -> "Japanese")
+        const baseLang = language.split(' - ')[0].toLowerCase().trim();
+
+        // Try exact match first, then partial match
+        let langCode = langMap[baseLang];
+        if (!langCode) {
+            // Try partial matching for cases like "japanese vocabulary" -> "ja"
+            for (const [key, value] of Object.entries(langMap)) {
+                if (baseLang.includes(key) || key.includes(baseLang)) {
+                    langCode = value;
+                    break;
+                }
+            }
+        }
+
+        // Default to English if no match found
+        langCode = langCode || 'en';
+
+        // Clean text (remove romaji/romanization after slashes for better pronunciation)
+        const cleanText = text.split('/')[0].trim();
+
+        return `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
+    }
+
+    // Play pronunciation
+    playPronunciation(text, language) {
+        const url = this.getTTSUrl(text, language);
+
+        // Use cached audio or create new
+        if (!this.audioCache[url]) {
+            this.audioCache[url] = new Audio(url);
+        }
+
+        const audio = this.audioCache[url];
+        audio.currentTime = 0;
+        audio.play().catch(err => {
+            console.warn('Audio playback failed:', err);
+        });
     }
 
     init() {
@@ -131,6 +187,7 @@ class FlashcardApp {
     }
 
     showFlashcard() {
+        const card = this.currentCards[this.currentIndex];
         document.body.innerHTML = `
             <div class="container">
                 <div class="session-header">
@@ -141,9 +198,12 @@ class FlashcardApp {
 
                 <div class="flashcard" onclick="app.flipCard()">
                     <div class="card-content">
-                        <div class="card-text" id="cardText">${this.currentCards[this.currentIndex].front}</div>
-                        ${this.currentCards[this.currentIndex].notes ?
-                            `<div class="card-notes" id="cardNotes" style="display: none;">${this.currentCards[this.currentIndex].notes}</div>` :
+                        <div class="card-text" id="cardText">${card.front}</div>
+                        <button class="audio-btn" onclick="event.stopPropagation(); app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
+                            🔊
+                        </button>
+                        ${card.notes ?
+                            `<div class="card-notes" id="cardNotes" style="display: none;">${card.notes}</div>` :
                             ''}
                     </div>
                 </div>
@@ -176,7 +236,12 @@ class FlashcardApp {
                 <div class="quiz-card">
                     <div class="question">
                         <h3>Translate:</h3>
-                        <div class="question-text">${card.front}</div>
+                        <div class="question-text">
+                            ${card.front}
+                            <button class="audio-btn-inline" onclick="app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
+                                🔊
+                            </button>
+                        </div>
                         ${card.notes ? `<div class="question-notes">${card.notes}</div>` : ''}
                     </div>
 
@@ -366,6 +431,7 @@ class FlashcardApp {
             .card-content {
                 text-align: center;
                 width: 100%;
+                position: relative;
             }
 
             .card-text {
@@ -379,6 +445,30 @@ class FlashcardApp {
                 font-size: 1em;
                 color: #666;
                 font-style: italic;
+            }
+
+            .audio-btn {
+                position: absolute;
+                top: 0;
+                right: 0;
+                background: #667eea;
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 1.5em;
+                cursor: pointer;
+                transition: all 0.2s;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+
+            .audio-btn:hover {
+                background: #764ba2;
+                transform: scale(1.1);
+            }
+
+            .audio-btn:active {
+                transform: scale(0.95);
             }
 
             .controls {
@@ -431,11 +521,37 @@ class FlashcardApp {
                 font-weight: bold;
                 margin: 20px 0;
                 color: #333;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 15px;
             }
 
             .question-notes {
                 color: #666;
                 font-style: italic;
+            }
+
+            .audio-btn-inline {
+                background: #667eea;
+                border: none;
+                border-radius: 50%;
+                width: 45px;
+                height: 45px;
+                font-size: 1.3em;
+                cursor: pointer;
+                transition: all 0.2s;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                flex-shrink: 0;
+            }
+
+            .audio-btn-inline:hover {
+                background: #764ba2;
+                transform: scale(1.1);
+            }
+
+            .audio-btn-inline:active {
+                transform: scale(0.95);
             }
 
             .answer-section {
