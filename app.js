@@ -691,6 +691,142 @@ function loadFromPaste() {
     }
 }
 
+// GitHub repository configuration
+const GITHUB_CONFIG = {
+    baseUrl: 'https://raw.githubusercontent.com/sterlingalston/language-study/refs/heads/master/vocabulary',
+    files: {
+        'Japanese': ['japanese_vocabulary.txt', 'hiragana_chart.txt'],
+        'German': ['german_vocabulary.txt'],
+        'Spanish': ['spanish_vocabulary.txt'],
+        'Chinese': ['chinese_vocabulary.txt']
+    }
+};
+
+// Handle language selection change
+function handleGithubLanguageChange() {
+    const select = document.getElementById('githubLanguageSelect');
+    const fileListDiv = document.getElementById('githubFileList');
+    const checkboxesDiv = document.getElementById('fileCheckboxes');
+
+    const selectedLanguage = select.value;
+
+    if (!selectedLanguage) {
+        fileListDiv.style.display = 'none';
+        return;
+    }
+
+    const files = GITHUB_CONFIG.files[selectedLanguage] || [];
+
+    checkboxesDiv.innerHTML = '';
+    files.forEach(file => {
+        const label = document.createElement('label');
+        label.style.display = 'block';
+        label.style.padding = '5px';
+        label.style.cursor = 'pointer';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = file;
+        checkbox.checked = true;
+        checkbox.style.marginRight = '10px';
+
+        const fileName = file.replace('.txt', '').replace(/_/g, ' ');
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(fileName));
+
+        checkboxesDiv.appendChild(label);
+    });
+
+    fileListDiv.style.display = files.length > 0 ? 'block' : 'none';
+}
+
+// Load vocabulary from GitHub
+async function loadFromGithub() {
+    const select = document.getElementById('githubLanguageSelect');
+    const checkboxes = document.querySelectorAll('#fileCheckboxes input[type="checkbox"]:checked');
+
+    const selectedLanguage = select.value;
+
+    if (!selectedLanguage) {
+        alert('Please select a language first!');
+        return;
+    }
+
+    if (checkboxes.length === 0) {
+        alert('Please select at least one file to load!');
+        return;
+    }
+
+    // Check if we're on file:// protocol
+    if (window.location.protocol === 'file:') {
+        alert('GitHub loading is blocked when opening the file directly.\n\nPlease use one of these methods:\n1. Use the GitHub Pages site\n2. Copy/paste the content instead (see "Paste Content Directly" section)');
+        return;
+    }
+
+    const button = event.target;
+    const originalText = button.textContent;
+    button.textContent = 'Loading...';
+    button.disabled = true;
+
+    try {
+        let totalLoaded = 0;
+        const errors = [];
+
+        for (const checkbox of checkboxes) {
+            const fileName = checkbox.value;
+            const url = `${GITHUB_CONFIG.baseUrl}/${selectedLanguage}/${fileName}`;
+            const displayName = fileName.replace('.txt', '').replace(/_/g, ' ');
+            const languageName = `${selectedLanguage} - ${displayName}`;
+
+            try {
+                const result = await app.loadFromUrl(url, languageName);
+
+                if (result.success) {
+                    totalLoaded += result.count;
+                } else {
+                    errors.push(`${fileName}: ${result.error}`);
+                }
+            } catch (error) {
+                errors.push(`${fileName}: ${error.message}`);
+            }
+        }
+
+        app.updateLanguageGrid();
+
+        let message = `Successfully loaded ${totalLoaded} vocabulary entries!`;
+
+        if (errors.length > 0) {
+            message += '\n\nErrors:\n' + errors.join('\n');
+        }
+
+        // Check if localStorage is available
+        try {
+            localStorage.setItem('test', 'test');
+            localStorage.removeItem('test');
+        } catch (e) {
+            message += '\n\nNote: Data will only last this session.';
+        }
+
+        alert(message);
+
+        // Reset selection
+        select.value = '';
+        handleGithubLanguageChange();
+
+    } catch (error) {
+        alert(`Error loading from GitHub: ${error.message}`);
+    } finally {
+        button.textContent = originalText;
+        button.disabled = false;
+    }
+}
+
 window.onload = function() {
     app.init();
+
+    // Add event listener for GitHub language selector
+    const githubSelect = document.getElementById('githubLanguageSelect');
+    if (githubSelect) {
+        githubSelect.addEventListener('change', handleGithubLanguageChange);
+    }
 };

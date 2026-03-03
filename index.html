@@ -145,7 +145,24 @@
             </div>
 
             <div class="file-input-section">
-                <h3>Load from GitHub URL</h3>
+                <h3>Load from GitHub Repository</h3>
+                <p>Select a language to load vocabulary automatically:</p>
+                <select id="githubLanguageSelect" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 1em;">
+                    <option value="">-- Select Language --</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="German">German</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Chinese">Chinese</option>
+                </select>
+                <div id="githubFileList" style="display: none; margin: 10px 0;">
+                    <p>Available files:</p>
+                    <div id="fileCheckboxes" style="text-align: left; max-height: 150px; overflow-y: auto; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background: #f9f9f9;"></div>
+                </div>
+                <button onclick="loadFromGithub()" class="mode-btn">Load Selected Vocabulary</button>
+            </div>
+
+            <div class="file-input-section">
+                <h3>Or Load from Custom URL</h3>
                 <p>Enter a URL to a raw text file (works on GitHub Pages only):</p>
                 <input type="url" id="urlInput" placeholder="https://raw.githubusercontent.com/user/repo/main/vocab.txt" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
                 <input type="text" id="languageNameInput" placeholder="Language name (e.g., Spanish)" style="width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px;">
