@@ -11,9 +11,8 @@ class FlashcardApp {
         this.audioCache = {};
     }
 
-    // Get Google Translate TTS URL
-    getTTSUrl(text, language) {
-        // Map language names to Google Translate language codes (native pronunciation)
+    // Get language code for TTS
+    getLanguageCode(language) {
         const langMap = {
             'japanese': 'ja',
             'german': 'de',
@@ -26,13 +25,10 @@ class FlashcardApp {
             'italian': 'it'
         };
 
-        // Extract base language name (e.g., "Japanese - hiragana chart" -> "Japanese")
         const baseLang = language.split(' - ')[0].toLowerCase().trim();
 
-        // Try exact match first, then partial match
         let langCode = langMap[baseLang];
         if (!langCode) {
-            // Try partial matching for cases like "japanese vocabulary" -> "ja"
             for (const [key, value] of Object.entries(langMap)) {
                 if (baseLang.includes(key) || key.includes(baseLang)) {
                     langCode = value;
@@ -41,48 +37,78 @@ class FlashcardApp {
             }
         }
 
-        // Default to English if no match found
-        langCode = langCode || 'en';
-
-        // Clean text (remove romaji/romanization after slashes for better pronunciation)
-        const cleanText = text.split('/')[0].trim();
-
-        // Use gtx client for better compatibility
-        return `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=gtx&q=${encodeURIComponent(cleanText)}&ttsspeed=1`;
+        return langCode || 'en';
     }
 
-    // Play pronunciation
+    // Play pronunciation using Web Speech API (native browser TTS)
     playPronunciation(text, language) {
-        const url = this.getTTSUrl(text, language);
+        // Clean text (remove romaji/romanization after slashes)
+        const cleanText = text.split('/')[0].trim();
+        const langCode = this.getLanguageCode(language);
 
-        console.log('Playing audio:', url);
+        console.log('Playing audio for:', cleanText, 'Language:', langCode);
 
-        // Create new audio element each time (better for CORS)
-        const audio = new Audio();
+        // Try Web Speech API first (native, always works)
+        if ('speechSynthesis' in window) {
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
 
-        // Set up error handling
-        audio.addEventListener('error', (e) => {
-            console.error('Audio error:', e);
-            console.error('Failed URL:', url);
-            alert('Could not play audio. Check browser console for details.');
-        });
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = langCode;
+            utterance.rate = 0.9; // Slightly slower for learning
 
-        audio.addEventListener('loadstart', () => {
-            console.log('Audio loading...');
-        });
+            // Try to find a voice for the language
+            const voices = window.speechSynthesis.getVoices();
+            const langVoice = voices.find(voice => voice.lang.startsWith(langCode));
 
-        audio.addEventListener('canplay', () => {
-            console.log('Audio ready to play');
-        });
+            if (langVoice) {
+                utterance.voice = langVoice;
+                console.log('Using voice:', langVoice.name);
+            }
 
-        // Set source and play
-        audio.src = url;
-        audio.play().catch(err => {
-            console.error('Audio playback failed:', err);
-            // Fallback: open in new tab
-            console.log('Trying fallback method...');
-            window.open(url, '_blank');
-        });
+            utterance.onerror = (e) => {
+                console.error('Speech synthesis error:', e);
+                this.fallbackToGoogleTTS(cleanText, langCode);
+            };
+
+            window.speechSynthesis.speak(utterance);
+        } else {
+            // Fallback to Google TTS
+            console.log('Web Speech API not available, using Google TTS');
+            this.fallbackToGoogleTTS(cleanText, langCode);
+        }
+    }
+
+    // Fallback to Google TTS
+    fallbackToGoogleTTS(text, langCode) {
+        // Multiple Google TTS URL formats to try
+        const urls = [
+            `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=gtx&q=${encodeURIComponent(text)}`,
+            `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${encodeURIComponent(text)}&textlen=${text.length}`
+        ];
+
+        let audio = new Audio();
+        let urlIndex = 0;
+
+        const tryNextUrl = () => {
+            if (urlIndex >= urls.length) {
+                console.error('All TTS methods failed');
+                alert('Audio playback failed. Your browser may be blocking external audio.');
+                return;
+            }
+
+            const url = urls[urlIndex];
+            console.log(`Trying URL ${urlIndex + 1}:`, url);
+
+            audio.src = url;
+            audio.play().catch(err => {
+                console.error(`URL ${urlIndex + 1} failed:`, err);
+                urlIndex++;
+                tryNextUrl();
+            });
+        };
+
+        tryNextUrl();
     }
 
     init() {
