@@ -47,22 +47,41 @@ class FlashcardApp {
         // Clean text (remove romaji/romanization after slashes for better pronunciation)
         const cleanText = text.split('/')[0].trim();
 
-        return `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${encodeURIComponent(cleanText)}`;
+        // Use gtx client for better compatibility
+        return `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=gtx&q=${encodeURIComponent(cleanText)}&ttsspeed=1`;
     }
 
     // Play pronunciation
     playPronunciation(text, language) {
         const url = this.getTTSUrl(text, language);
 
-        // Use cached audio or create new
-        if (!this.audioCache[url]) {
-            this.audioCache[url] = new Audio(url);
-        }
+        console.log('Playing audio:', url);
 
-        const audio = this.audioCache[url];
-        audio.currentTime = 0;
+        // Create new audio element each time (better for CORS)
+        const audio = new Audio();
+
+        // Set up error handling
+        audio.addEventListener('error', (e) => {
+            console.error('Audio error:', e);
+            console.error('Failed URL:', url);
+            alert('Could not play audio. Check browser console for details.');
+        });
+
+        audio.addEventListener('loadstart', () => {
+            console.log('Audio loading...');
+        });
+
+        audio.addEventListener('canplay', () => {
+            console.log('Audio ready to play');
+        });
+
+        // Set source and play
+        audio.src = url;
         audio.play().catch(err => {
-            console.warn('Audio playback failed:', err);
+            console.error('Audio playback failed:', err);
+            // Fallback: open in new tab
+            console.log('Trying fallback method...');
+            window.open(url, '_blank');
         });
     }
 
@@ -857,7 +876,7 @@ function handleGithubLanguageChange() {
 }
 
 // Load vocabulary from GitHub
-async function loadFromGithub() {
+async function loadFromGithub(event) {
     const select = document.getElementById('githubLanguageSelect');
     const checkboxes = document.querySelectorAll('#fileCheckboxes input[type="checkbox"]:checked');
 
@@ -879,7 +898,7 @@ async function loadFromGithub() {
         return;
     }
 
-    const button = event.target;
+    const button = event ? event.target : document.querySelector('button[onclick*="loadFromGithub"]');
     const originalText = button.textContent;
     button.textContent = 'Loading...';
     button.disabled = true;
@@ -894,16 +913,21 @@ async function loadFromGithub() {
             const displayName = fileName.replace('.txt', '').replace(/_/g, ' ');
             const languageName = `${selectedLanguage} - ${displayName}`;
 
+            console.log(`Loading from: ${url}`);
+
             try {
                 const result = await app.loadFromUrl(url, languageName);
 
                 if (result.success) {
                     totalLoaded += result.count;
+                    console.log(`✓ Loaded ${result.count} entries from ${fileName}`);
                 } else {
                     errors.push(`${fileName}: ${result.error}`);
+                    console.error(`✗ Failed to load ${fileName}:`, result.error);
                 }
             } catch (error) {
                 errors.push(`${fileName}: ${error.message}`);
+                console.error(`✗ Error loading ${fileName}:`, error);
             }
         }
 
@@ -931,6 +955,7 @@ async function loadFromGithub() {
 
     } catch (error) {
         alert(`Error loading from GitHub: ${error.message}`);
+        console.error('loadFromGithub error:', error);
     } finally {
         button.textContent = originalText;
         button.disabled = false;
