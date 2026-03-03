@@ -7,3 +7,4 @@
 こんばんは。 / Konbanwa.|Good evening.|greeting
 じゃあまた！ / Jaa mata!|See you later!|casual farewell
 さようなら / Sayounara|Goodbye|farewell
+ありがとうございます。 / Arigatou gozaimasu.|Thank you.|polite expression of gratitude
