@@ -11,18 +11,18 @@ class FlashcardApp {
         this.audioCache = {};
     }
 
-    // Get language code for TTS
-    getLanguageCode(language) {
+    // Get VoiceRSS language code
+    getVoiceRSSLanguageCode(language) {
         const langMap = {
-            'japanese': 'ja',
-            'german': 'de',
-            'spanish': 'es',
-            'chinese': 'zh-CN',
-            'mandarin': 'zh-CN',
-            'français': 'fr',
-            'french': 'fr',
-            'italiano': 'it',
-            'italian': 'it'
+            'japanese': 'ja-jp',
+            'german': 'de-de',
+            'spanish': 'es-es',
+            'chinese': 'zh-cn',
+            'mandarin': 'zh-cn',
+            'français': 'fr-fr',
+            'french': 'fr-fr',
+            'italiano': 'it-it',
+            'italian': 'it-it'
         };
 
         const baseLang = language.split(' - ')[0].toLowerCase().trim();
@@ -37,78 +37,39 @@ class FlashcardApp {
             }
         }
 
-        return langCode || 'en';
+        return langCode || 'en-us';
     }
 
-    // Play pronunciation using Web Speech API (native browser TTS)
+    // Play pronunciation using VoiceRSS API
     playPronunciation(text, language) {
         // Clean text (remove romaji/romanization after slashes)
         const cleanText = text.split('/')[0].trim();
-        const langCode = this.getLanguageCode(language);
+        const langCode = this.getVoiceRSSLanguageCode(language);
 
         console.log('Playing audio for:', cleanText, 'Language:', langCode);
 
-        // Try Web Speech API first (native, always works)
-        if ('speechSynthesis' in window) {
-            // Cancel any ongoing speech
-            window.speechSynthesis.cancel();
+        // VoiceRSS API endpoint
+        const apiKey = 'a9d1a2963a804175a694b80d51e4af6f';
+        const audioUrl = `https://api.voicerss.org/?key=${apiKey}&hl=${langCode}&src=${encodeURIComponent(cleanText)}&c=MP3&f=44khz_16bit_stereo`;
 
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = langCode;
-            utterance.rate = 0.9; // Slightly slower for learning
+        console.log('Audio URL:', audioUrl);
 
-            // Try to find a voice for the language
-            const voices = window.speechSynthesis.getVoices();
-            const langVoice = voices.find(voice => voice.lang.startsWith(langCode));
+        // Create and play audio
+        const audio = new Audio(audioUrl);
 
-            if (langVoice) {
-                utterance.voice = langVoice;
-                console.log('Using voice:', langVoice.name);
-            }
+        audio.addEventListener('error', (e) => {
+            console.error('Audio error:', e);
+            alert('Failed to load audio. Check console for details.');
+        });
 
-            utterance.onerror = (e) => {
-                console.error('Speech synthesis error:', e);
-                this.fallbackToGoogleTTS(cleanText, langCode);
-            };
+        audio.addEventListener('canplaythrough', () => {
+            console.log('Audio loaded successfully');
+        });
 
-            window.speechSynthesis.speak(utterance);
-        } else {
-            // Fallback to Google TTS
-            console.log('Web Speech API not available, using Google TTS');
-            this.fallbackToGoogleTTS(cleanText, langCode);
-        }
-    }
-
-    // Fallback to Google TTS
-    fallbackToGoogleTTS(text, langCode) {
-        // Multiple Google TTS URL formats to try
-        const urls = [
-            `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=gtx&q=${encodeURIComponent(text)}`,
-            `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${encodeURIComponent(text)}&textlen=${text.length}`
-        ];
-
-        let audio = new Audio();
-        let urlIndex = 0;
-
-        const tryNextUrl = () => {
-            if (urlIndex >= urls.length) {
-                console.error('All TTS methods failed');
-                alert('Audio playback failed. Your browser may be blocking external audio.');
-                return;
-            }
-
-            const url = urls[urlIndex];
-            console.log(`Trying URL ${urlIndex + 1}:`, url);
-
-            audio.src = url;
-            audio.play().catch(err => {
-                console.error(`URL ${urlIndex + 1} failed:`, err);
-                urlIndex++;
-                tryNextUrl();
-            });
-        };
-
-        tryNextUrl();
+        audio.play().catch(err => {
+            console.error('Play error:', err);
+            alert('Could not play audio. Error: ' + err.message);
+        });
     }
 
     init() {
