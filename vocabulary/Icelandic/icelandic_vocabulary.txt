@@ -1,0 +1,31 @@
+Halló / Hallo|Hello|greeting
+Góðan daginn / Góðan daginn|Good day|formal greeting
+Bless / Bless|Goodbye|informal farewell
+Bless bless / Bless bless|Bye bye|very informal farewell
+Takk / Takk|Thanks|gratitude
+Takk fyrir / Takk fyrir|Thank you|polite gratitude
+Já / Já|Yes|affirmative
+Nei / Nei|No|negative
+Vinsamlegast / Vinsamlegast|Please|polite request
+Fyrirgefðu / Fyrirgefðu|Excuse me / Sorry|apology
+Góðan morgun / Góðan morgun|Good morning|morning greeting
+Gott kvöld / Gott kvöld|Good evening|evening greeting
+Góða nótt / Góða nótt|Good night|night farewell
+Hvað heitir þú? / Hvað heitir þú?|What is your name?|question
+Ég heiti... / Ég heiti...|My name is...|introduction
+Hvernig hefur þú það? / Hvernig hefur þú það?|How are you?|question
+Ég hef það gott / Ég hef það gott|I'm fine|response
+Gleðilegt nýtt ár! / Gleðilegt nýtt ár!|Happy New Year!|celebration
+Til hamingju / Til hamingju|Congratulations|celebration
+Velkominn / Velkominn|Welcome (to a man)|greeting
+Velkomin / Velkomin|Welcome (to a woman)|greeting
+Ég tala ekki íslensku / Ég tala ekki íslensku|I don't speak Icelandic|useful phrase
+Talarðu ensku? / Talarðu ensku?|Do you speak English?|question
+Ég skil ekki / Ég skil ekki|I don't understand|useful phrase
+Hvað kostar þetta? / Hvað kostar þetta?|How much does this cost?|shopping
+Vatn / Vatn|Water|noun
+Matur / Matur|Food|noun
+Kaffið / Kaffið|Coffee|noun
+Bjór / Bjór|Beer|noun
+Skál! / Skál!|Cheers!|toast
+Góða ferð / Góða ferð|Have a good trip|farewell

@@ -22,7 +22,9 @@ class FlashcardApp {
             'français': 'fr-fr',
             'french': 'fr-fr',
             'italiano': 'it-it',
-            'italian': 'it-it'
+            'italian': 'it-it',
+            'icelandic': 'is-is',
+            'íslenska': 'is-is'
         };
 
         const baseLang = language.split(' - ')[0].toLowerCase().trim();
@@ -197,7 +199,7 @@ class FlashcardApp {
         document.body.innerHTML = `
             <div class="container">
                 <div class="session-header">
-                    <button class="back-btn" onclick="app.showLanguages('${this.currentMode}')">← Back</button>
+                    <button class="back-btn" onclick="app.backToLanguages()">← Back</button>
                     <h2>${this.currentLanguage} - Flashcards</h2>
                     <p>Card ${this.currentIndex + 1} of ${this.currentCards.length}</p>
                 </div>
@@ -233,7 +235,7 @@ class FlashcardApp {
         document.body.innerHTML = `
             <div class="container">
                 <div class="session-header">
-                    <button class="back-btn" onclick="app.showLanguages('${this.currentMode}')">← Back</button>
+                    <button class="back-btn" onclick="app.backToLanguages()">← Back</button>
                     <h2>${this.currentLanguage} - Quiz</h2>
                     <p>Question ${this.currentIndex + 1} of ${this.currentCards.length}</p>
                     <p>Score: ${this.quizScore}/${this.quizAnswered}</p>
@@ -399,13 +401,18 @@ class FlashcardApp {
                     </div>
                     <div class="controls">
                         <button onclick="app.startSession('${this.currentLanguage}')" class="mode-btn">Try Again</button>
-                        <button onclick="app.showLanguages('${this.currentMode}')" class="back-btn">Back to Languages</button>
-                        <button onclick="app.showHome()" class="back-btn">Home</button>
+                        <button onclick="app.backToLanguages()" class="back-btn">Back to Languages</button>
+                        <button onclick="showHome()" class="back-btn">Home</button>
                     </div>
                 </div>
             </div>
         `;
         this.addResultStyles();
+    }
+
+    backToLanguages() {
+        // Reload the page to go back to home screen
+        location.reload();
     }
 
     addFlashcardStyles() {
@@ -455,7 +462,7 @@ class FlashcardApp {
 
             .audio-btn {
                 position: absolute;
-                top: 0;
+                bottom: 0;
                 right: 0;
                 background: #667eea;
                 border: none;
@@ -820,7 +827,8 @@ const GITHUB_CONFIG = {
         'Japanese': ['japanese_vocabulary.txt', 'hiragana_chart.txt'],
         'German': ['german_vocabulary.txt'],
         'Spanish': ['spanish_vocabulary.txt'],
-        'Chinese': ['chinese_vocabulary.txt']
+        'Chinese': ['chinese_vocabulary.txt'],
+        'Icelandic': ['icelandic_vocabulary.txt']
     }
 };
 
