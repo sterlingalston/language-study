@@ -7,3 +7,8 @@ Soy de España.|I'm from Spain.|origin statement
 ¿Cómo te llamas?|What's your name?|introduction question
 ¿De dónde eres?|Where are you from?|origin question
 ¿Qué tal?|How's it going?|casual greeting
+Tú eres de Inglaterra.|You're from England.|origin statement
+Vivo en Madrid.|I live in Madrid.|location statement
+Yo soy de España.|I'm from Spain.|origin statement (with explicit subject)
+¿Dónde vives?|Where do you live?|location question
+¿Y tú?|And you?|follow-up question
