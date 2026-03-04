@@ -8,3 +8,7 @@
 じゃあまた！ / Jaa mata!|See you later!|casual farewell
 さようなら / Sayounara|Goodbye|farewell
 ありがとうございます。 / Arigatou gozaimasu.|Thank you.|polite expression of gratitude
+ありがとう！ / Arigatou!|Thank you!|casual expression of gratitude
+いいえ。 / Iie.|No; no problem (response to thanks); you're welcome.|response/negation
+どうぞ。 / Douzo.|Here you go; please (go ahead).|offering/invitation
+すみません。 / Sumimasen.|Sorry; excuse me.|apology/getting attention
