@@ -1,9 +1,6 @@
-はじめまして。 / Hajimemashite.|Nice to meet you.|polite greeting
-どうぞよろしく。 / Douzo yoroshiku.|Pleased to meet you.|polite greeting
 こんにちは / Konnichiwa|Hello|general greeting
-わたし / Watashi|I|pronoun
-わたしはまりこです。 / Watashi wa Mariko desu.|I am Mariko.|self-introduction
-おはよう。 / Ohayou.|Good morning.|greeting
+おはよう。 / Ohayou.|Good morning.|casual morning greeting
+おはようございます。 / Ohayou gozaimasu.|Good morning. (formal)|polite morning greeting
 こんばんは。 / Konbanwa.|Good evening.|greeting
 じゃあまた！ / Jaa mata!|See you later!|casual farewell
 さようなら / Sayounara|Goodbye|farewell
@@ -13,4 +10,3 @@
 どうぞ。 / Douzo.|Here you go; please (go ahead).|offering/invitation
 すみません。 / Sumimasen.|Sorry; excuse me.|apology/getting attention
 いえ / ie|house; home|noun
-おはようございます。 / Ohayou gozaimasu.|Good morning. (formal)|polite morning greeting
