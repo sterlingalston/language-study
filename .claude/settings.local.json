@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(Select-Object FullName, LastWriteTime)",
-      "Bash(Sort-Object LastWriteTime)"
+      "Bash(Sort-Object LastWriteTime)",
+      "Bash(python3 -c \"\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'rb'\\) as f:\n    content = f.read\\(\\)\n\n# Fix line 10 by inserting newline before '11→'\ncontent = content.replace\\(b'gratitude11\\\\xe2\\\\x86\\\\x92', b'gratitude\\\\n11\\\\xe2\\\\x86\\\\x92'\\)\n\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'wb'\\) as f:\n    f.write\\(content\\)\n\")",
+      "Bash(python3 -c \"\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'r', encoding='utf-8'\\) as f:\n    content = f.read\\(\\)\n\n# Fix the appended lines\ncontent = content.replace\\('11→ありがとう！ / Arigatou\\\\!|Thank you\\\\!|', 'ありがとう！ / Arigatou!|Thank you!|'\\)\ncontent = content.replace\\('12→いいえ。', 'いいえ。'\\)\ncontent = content.replace\\('13→どうぞ。', 'どうぞ。'\\)\ncontent = content.replace\\('14→すみません。', 'すみません。'\\)\n\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'w', encoding='utf-8'\\) as f:\n    f.write\\(content\\)\n\")",
+      "Bash(python3 << 'EOF'\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'r', encoding='utf-8'\\) as f:\n    lines = f.readlines\\(\\)\n\nnew_lines = []\nfor line in lines:\n    line = line.replace\\('11→', ''\\).replace\\('12→', ''\\).replace\\('13→', ''\\).replace\\('14→', ''\\)\n    line = line.replace\\(r'\\\\!', '!'\\)\n    new_lines.append\\(line\\)\n\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'w', encoding='utf-8'\\) as f:\n    f.writelines\\(new_lines\\)\nEOF)",
+      "Bash(git push)",
+      "Bash(python3 << 'EOF'\nwith open\\('/home/malston/language-study/vocabulary/Spanish/spanish_vocabulary.txt', 'r', encoding='utf-8'\\) as f:\n    content = f.read\\(\\)\n\ncontent = content.replace\\('casual greetingTú', 'casual greeting\\\\nTú'\\)\n\nwith open\\('/home/malston/language-study/vocabulary/Spanish/spanish_vocabulary.txt', 'w', encoding='utf-8'\\) as f:\n    f.write\\(content\\)\nEOF)",
+      "Bash(git add -A && git status)"
     ],
     "deny": [],
     "ask": []
