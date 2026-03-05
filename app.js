@@ -228,6 +228,22 @@ class FlashcardApp {
             </div>
         `;
         this.addFlashcardStyles();
+        this.bindFlashcardKeys();
+    }
+
+    bindFlashcardKeys() {
+        if (this._flashcardKeyHandler) {
+            document.removeEventListener('keydown', this._flashcardKeyHandler);
+        }
+        this._flashcardKeyHandler = (e) => {
+            switch (e.key) {
+                case 'ArrowLeft':  this.previousCard(); break;
+                case 'ArrowRight': this.nextCard(); break;
+                case 'ArrowUp':    e.preventDefault(); this.flipCard(); break;
+                case 'ArrowDown':  e.preventDefault(); this.playPronunciation(this.currentCards[this.currentIndex].front, this.currentLanguage); break;
+            }
+        };
+        document.addEventListener('keydown', this._flashcardKeyHandler);
     }
 
     showQuizCard() {
@@ -411,7 +427,10 @@ class FlashcardApp {
     }
 
     backToLanguages() {
-        // Reload the page to go back to home screen
+        if (this._flashcardKeyHandler) {
+            document.removeEventListener('keydown', this._flashcardKeyHandler);
+            this._flashcardKeyHandler = null;
+        }
         location.reload();
     }
 
