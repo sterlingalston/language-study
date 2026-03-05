@@ -241,6 +241,7 @@ class FlashcardApp {
                 case 'ArrowRight': this.nextCard(); break;
                 case 'ArrowUp':    e.preventDefault(); this.flipCard(); break;
                 case 'ArrowDown':  e.preventDefault(); this.playPronunciation(this.currentCards[this.currentIndex].front, this.currentLanguage); break;
+                case 's':          this.shuffleCards(); break;
             }
         };
         document.addEventListener('keydown', this._flashcardKeyHandler);
