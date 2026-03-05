@@ -1,0 +1,10 @@
+あ / a|A - hiragana vowel (as in "ah")|hiragana vowel
+い / i|I - hiragana vowel (as in "machine")|hiragana vowel
+う / u|U - hiragana vowel (as in "tune")|hiragana vowel
+え / e|E - hiragana vowel (as in "egg")|hiragana vowel
+お / o|O - hiragana vowel (as in "hole")|hiragana vowel
+あう / au|to come together; to meet; to fit; to match; to do together|verb (godan -u)
+いう / iu|to say; to call (give a name)|verb (godan -u)
+いえ / ie|house; residence; family; household; lineage|noun
+うえ / ue|above; up; over; top; surface; before; superiority|noun/adverb
+あおい / aoi|blue; green; pale; unripe; inexperienced|adjective (i-adj)
