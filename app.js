@@ -240,7 +240,8 @@ class FlashcardApp {
                 case 'ArrowLeft':  this.previousCard(); break;
                 case 'ArrowRight': this.nextCard(); break;
                 case 'ArrowUp':    e.preventDefault(); this.flipCard(); break;
-                case 'ArrowDown':  e.preventDefault(); this.playPronunciation(this.currentCards[this.currentIndex].front, this.currentLanguage); break;
+                case 'ArrowDown':  e.preventDefault(); this.flipCard(); break;
+                case ' ':          e.preventDefault(); this.playPronunciation(this.currentCards[this.currentIndex].front, this.currentLanguage); break;
                 case 's':          this.shuffleCards(); break;
             }
         };
