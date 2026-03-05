@@ -1,10 +1,16 @@
-あ / a|A - hiragana vowel (as in "ah")|hiragana vowel
-い / i|I - hiragana vowel (as in "machine")|hiragana vowel
-う / u|U - hiragana vowel (as in "tune")|hiragana vowel
-え / e|E - hiragana vowel (as in "egg")|hiragana vowel
-お / o|O - hiragana vowel (as in "hole")|hiragana vowel
+あ / a|A - hiragana vowel (as in "ah")|looks like a person skating
+い / i|I - hiragana vowel (as in "machine")|looks like two ears or two drops of water
+う / u|U - hiragana vowel (as in "tune")|imagine a man pulling something very heavy
+え / e|E - hiragana vowel (as in "egg")|imagine a running man or a creature with a tail
+お / o|O - hiragana vowel (as in "hole")|looks like a sleeping cat
 あう / au|to come together; to meet; to fit; to match; to do together|verb (godan -u)
 いう / iu|to say; to call (give a name)|verb (godan -u)
 いえ / ie|house; residence; family; household; lineage|noun
 うえ / ue|above; up; over; top; surface; before; superiority|noun/adverb
 あおい / aoi|blue; green; pale; unripe; inexperienced|adjective (i-adj)
+How many letters does each Japanese alphabet have?|46|fact
+How many alphabets does Japanese have?|Two - hiragana and katakana|fact
+What is hiragana used for?|Writing words of Japanese origin|fact
+What is katakana used for?|Writing borrowed vocabulary and foreign names|fact
+Which Japanese alphabet is used for native Japanese words?|Hiragana|fact
+Which Japanese alphabet is used for foreign names and loanwords?|Katakana|fact
