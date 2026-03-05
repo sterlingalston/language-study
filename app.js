@@ -207,13 +207,13 @@ class FlashcardApp {
                 <div class="flashcard" onclick="app.flipCard()">
                     <div class="card-content">
                         <div class="card-text" id="cardText">${card.front}</div>
-                        <button class="audio-btn" onclick="event.stopPropagation(); app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
-                            🔊
-                        </button>
                         ${card.notes ?
                             `<div class="card-notes" id="cardNotes" style="display: none;">${card.notes}</div>` :
                             ''}
                     </div>
+                    <button class="audio-btn" onclick="event.stopPropagation(); app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
+                        🔊
+                    </button>
                 </div>
 
                 <div class="controls">
@@ -435,6 +435,7 @@ class FlashcardApp {
                 justify-content: center;
                 cursor: pointer;
                 transition: transform 0.2s;
+                position: relative;
             }
 
             .flashcard:hover {
@@ -462,8 +463,8 @@ class FlashcardApp {
 
             .audio-btn {
                 position: absolute;
-                bottom: 0;
-                right: 0;
+                bottom: 15px;
+                right: 15px;
                 background: #667eea;
                 border: none;
                 border-radius: 50%;
