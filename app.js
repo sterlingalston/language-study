@@ -248,8 +248,21 @@ class FlashcardApp {
         document.addEventListener('keydown', this._flashcardKeyHandler);
     }
 
+    generateChoices(correctCard) {
+        const others = this.currentCards.filter(c => c !== correctCard);
+        const shuffled = [...others].sort(() => Math.random() - 0.5);
+        const choices = [...shuffled.slice(0, 3), correctCard].sort(() => Math.random() - 0.5);
+        return choices;
+    }
+
     showQuizCard() {
         const card = this.currentCards[this.currentIndex];
+        this.currentChoices = this.generateChoices(card);
+
+        const choiceButtons = this.currentChoices.map((choice, i) =>
+            `<button class="choice-btn" id="choice-${i}" onclick="app.selectChoice(${i})">${choice.back}</button>`
+        ).join('');
+
         document.body.innerHTML = `
             <div class="container">
                 <div class="session-header">
@@ -261,7 +274,7 @@ class FlashcardApp {
 
                 <div class="quiz-card">
                     <div class="question">
-                        <h3>Translate:</h3>
+                        <h3>What does this mean?</h3>
                         <div class="question-text">
                             ${card.front}
                             <button class="audio-btn-inline" onclick="app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
@@ -271,23 +284,44 @@ class FlashcardApp {
                         ${card.notes ? `<div class="question-notes">${card.notes}</div>` : ''}
                     </div>
 
-                    <div class="answer-section">
-                        <input type="text" id="userAnswer" placeholder="Enter your answer..."
-                               onkeypress="if(event.key==='Enter') app.checkAnswer()">
-                        <button onclick="app.checkAnswer()">Check Answer</button>
+                    <div class="choices">
+                        ${choiceButtons}
                     </div>
 
                     <div id="result" class="result"></div>
                 </div>
 
                 <div class="quiz-controls">
-                    <button onclick="app.skipQuestion()">Skip</button>
                     <button id="nextBtn" onclick="app.nextQuizCard()" style="display: none;">Next →</button>
                 </div>
             </div>
         `;
         this.addQuizStyles();
-        document.getElementById('userAnswer').focus();
+    }
+
+    selectChoice(choiceIndex) {
+        const card = this.currentCards[this.currentIndex];
+        const isCorrect = this.currentChoices[choiceIndex] === card;
+
+        this.quizAnswered++;
+        if (isCorrect) this.quizScore++;
+
+        this.currentChoices.forEach((choice, i) => {
+            const btn = document.getElementById(`choice-${i}`);
+            btn.disabled = true;
+            if (choice === card) {
+                btn.classList.add('choice-correct');
+            } else if (i === choiceIndex) {
+                btn.classList.add('choice-wrong');
+            }
+        });
+
+        const result = document.getElementById('result');
+        result.innerHTML = isCorrect
+            ? `<div class="correct">✅ Correct!</div>`
+            : `<div class="incorrect">❌ The correct answer was: <strong>${card.back}</strong></div>`;
+
+        document.getElementById('nextBtn').style.display = 'inline-block';
     }
 
     flipCard() {
@@ -328,75 +362,6 @@ class FlashcardApp {
         this.showFlashcard();
     }
 
-    checkAnswer() {
-        const userAnswer = document.getElementById('userAnswer').value.trim().toLowerCase();
-        const correctAnswer = this.currentCards[this.currentIndex].back.toLowerCase();
-        const result = document.getElementById('result');
-        const nextBtn = document.getElementById('nextBtn');
-
-        this.quizAnswered++;
-
-        if (userAnswer === correctAnswer || this.isCloseMatch(userAnswer, correctAnswer)) {
-            this.quizScore++;
-            result.innerHTML = `
-                <div class="correct">
-                    ✅ Correct!
-                    <div class="answer-display">${this.currentCards[this.currentIndex].back}</div>
-                </div>
-            `;
-        } else {
-            result.innerHTML = `
-                <div class="incorrect">
-                    ❌ Incorrect. The correct answer is:
-                    <div class="answer-display">${this.currentCards[this.currentIndex].back}</div>
-                </div>
-            `;
-        }
-
-        document.getElementById('userAnswer').disabled = true;
-        nextBtn.style.display = 'inline-block';
-    }
-
-    isCloseMatch(answer, correct) {
-        return this.levenshteinDistance(answer, correct) <= Math.floor(correct.length * 0.2);
-    }
-
-    levenshteinDistance(str1, str2) {
-        const matrix = [];
-        for (let i = 0; i <= str2.length; i++) {
-            matrix[i] = [i];
-        }
-        for (let j = 0; j <= str1.length; j++) {
-            matrix[0][j] = j;
-        }
-        for (let i = 1; i <= str2.length; i++) {
-            for (let j = 1; j <= str1.length; j++) {
-                if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
-                    matrix[i][j] = matrix[i - 1][j - 1];
-                } else {
-                    matrix[i][j] = Math.min(
-                        matrix[i - 1][j - 1] + 1,
-                        matrix[i][j - 1] + 1,
-                        matrix[i - 1][j] + 1
-                    );
-                }
-            }
-        }
-        return matrix[str2.length][str1.length];
-    }
-
-    skipQuestion() {
-        this.quizAnswered++;
-        const result = document.getElementById('result');
-        result.innerHTML = `
-            <div class="skipped">
-                ⏭️ Skipped. The answer was:
-                <div class="answer-display">${this.currentCards[this.currentIndex].back}</div>
-            </div>
-        `;
-        document.getElementById('userAnswer').disabled = true;
-        document.getElementById('nextBtn').style.display = 'inline-block';
-    }
 
     nextQuizCard() {
         if (this.currentIndex < this.currentCards.length - 1) {
@@ -589,35 +554,52 @@ class FlashcardApp {
                 transform: scale(0.95);
             }
 
-            .answer-section {
-                text-align: center;
+            .choices {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
                 margin: 20px 0;
             }
 
-            .answer-section input {
-                width: 70%;
-                padding: 15px;
-                font-size: 1.2em;
+            .choice-btn {
+                padding: 18px 12px;
+                font-size: 1em;
                 border: 2px solid #ddd;
                 border-radius: 10px;
-                margin-right: 10px;
+                background: white;
+                cursor: pointer;
+                transition: all 0.15s;
+                text-align: center;
+                line-height: 1.4;
             }
 
-            .answer-section button {
-                padding: 15px 30px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                font-size: 1.1em;
+            .choice-btn:hover:not(:disabled) {
+                border-color: #667eea;
+                background: #f0f4ff;
+            }
+
+            .choice-btn:disabled {
+                cursor: default;
+            }
+
+            .choice-correct {
+                background: #d4edda !important;
+                border-color: #28a745 !important;
+                color: #155724;
+            }
+
+            .choice-wrong {
+                background: #f8d7da !important;
+                border-color: #dc3545 !important;
+                color: #721c24;
             }
 
             .result {
-                margin: 20px 0;
-                padding: 15px;
+                margin: 15px 0;
+                padding: 12px;
                 border-radius: 10px;
                 text-align: center;
+                font-size: 1.1em;
             }
 
             .correct {
@@ -630,28 +612,20 @@ class FlashcardApp {
                 color: #721c24;
             }
 
-            .skipped {
-                background: #fff3cd;
-                color: #856404;
-            }
-
-            .answer-display {
-                font-weight: bold;
-                font-size: 1.2em;
-                margin-top: 10px;
-            }
-
             .quiz-controls {
                 text-align: center;
-                margin-top: 20px;
+                margin-top: 15px;
             }
 
             .quiz-controls button {
                 margin: 0 10px;
-                padding: 10px 20px;
+                padding: 12px 30px;
                 border: none;
                 border-radius: 8px;
                 cursor: pointer;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                font-size: 1em;
             }
         `;
         document.head.appendChild(style);
