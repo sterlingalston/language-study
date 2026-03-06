@@ -1,17 +1,12 @@
-か|ka (KA) - hiragana k-row|looks like a great karate kick
-き|ki (KI) - hiragana k-row|looks like a big key
-く|ku (KU) - hiragana k-row|think of a bird's beak; a bird says "coo-coo"
-け|ke (KE) - hiragana k-row|looks like two clothes pegs
-こ|ko (KO) - hiragana k-row|reminds of the round edges of a coin
+か|ka (as in "karate")|looks like a great karate kick
+き|ki (as in "key")|looks like a big key
+く|ku (as in "coo-coo")|think of a bird's beak; a bird says "coo-coo"
+け|ke (as in "kept")|looks like two clothes pegs
+こ|ko (as in "coin")|reminds of the round edges of a coin
 かき / kaki|persimmon|noun; uses か+き
 かく / kaku|to write|verb (godan -ku); uses か+く
 きく / kiku|to listen; to hear|verb (godan -ku); uses き+く
 こい / koi|carp (the fish)|noun; uses こ+い
 こけ / koke|moss|noun; uses こ+け
 あかい / akai|red|adjective (i-adj); uses あ+か+い
-What sound does か make?|ka (as in "karate")|hiragana k-row
-What sound does き make?|ki (as in "key")|hiragana k-row
-What sound does く make?|ku (as in "coo-coo")|hiragana k-row
-What sound does け make?|ke (as in "kept")|hiragana k-row
-What sound does こ make?|ko (as in "coin")|hiragana k-row
 How many hiragana letters are in the k-row (か き く け こ)?|5|fact
