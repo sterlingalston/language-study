@@ -1,8 +1,8 @@
-か / ka|KA - hiragana consonant (k-row)|looks like a great karate kick
-き / ki|KI - hiragana consonant (k-row)|looks like a big key
-く / ku|KU - hiragana consonant (k-row)|think of a bird's beak; a bird says "coo-coo"
-け / ke|KE - hiragana consonant (k-row)|looks like two clothes pegs
-こ / ko|KO - hiragana consonant (k-row)|reminds of the round edges of a coin
+か|ka (KA) - hiragana k-row|looks like a great karate kick
+き|ki (KI) - hiragana k-row|looks like a big key
+く|ku (KU) - hiragana k-row|think of a bird's beak; a bird says "coo-coo"
+け|ke (KE) - hiragana k-row|looks like two clothes pegs
+こ|ko (KO) - hiragana k-row|reminds of the round edges of a coin
 かき / kaki|persimmon|noun; uses か+き
 かく / kaku|to write|verb (godan -ku); uses か+く
 きく / kiku|to listen; to hear|verb (godan -ku); uses き+く

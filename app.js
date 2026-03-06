@@ -103,6 +103,36 @@ class FlashcardApp {
         }
     }
 
+    renderContent(text) {
+        // YouTube
+        const ytMatch = text.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+        if (ytMatch) {
+            const videoId = ytMatch[1];
+            const label = text.replace(ytMatch[0], '').trim();
+            return `${label ? `<div>${this.escapeHtml(label)}</div>` : ''}<iframe width="100%" height="220" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen class="card-media"></iframe>`;
+        }
+
+        // Image
+        const imgMatch = text.match(/https?:\/\/\S+\.(?:jpg|jpeg|png|gif|webp|svg)(?:\?\S*)?/i);
+        if (imgMatch) {
+            const label = text.replace(imgMatch[0], '').trim();
+            return `${label ? `<div>${this.escapeHtml(label)}</div>` : ''}<img src="${imgMatch[0]}" class="card-media" alt="">`;
+        }
+
+        // Video
+        const vidMatch = text.match(/https?:\/\/\S+\.(?:mp4|webm|ogg)(?:\?\S*)?/i);
+        if (vidMatch) {
+            const label = text.replace(vidMatch[0], '').trim();
+            return `${label ? `<div>${this.escapeHtml(label)}</div>` : ''}<video controls class="card-media"><source src="${vidMatch[0]}"></video>`;
+        }
+
+        return this.escapeHtml(text);
+    }
+
+    escapeHtml(text) {
+        return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
     parseFile(filename, content) {
         const lines = content.split('\n').filter(line => line.trim());
         const cards = [];
@@ -206,9 +236,9 @@ class FlashcardApp {
 
                 <div class="flashcard" onclick="app.flipCard()">
                     <div class="card-content">
-                        <div class="card-text" id="cardText">${card.front}</div>
+                        <div class="card-text" id="cardText">${this.renderContent(card.front)}</div>
                         ${card.notes ?
-                            `<div class="card-notes" id="cardNotes" style="display: none;">${card.notes}</div>` :
+                            `<div class="card-notes" id="cardNotes" style="display: none;">${this.escapeHtml(card.notes)}</div>` :
                             ''}
                     </div>
                     <button class="audio-btn" onclick="event.stopPropagation(); app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
@@ -276,7 +306,7 @@ class FlashcardApp {
                     <div class="question">
                         <h3>What does this mean?</h3>
                         <div class="question-text">
-                            ${card.front}
+                            <span>${this.renderContent(card.front)}</span>
                             <button class="audio-btn-inline" onclick="app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
                                 🔊
                             </button>
@@ -329,11 +359,11 @@ class FlashcardApp {
         const cardNotes = document.getElementById('cardNotes');
 
         if (!this.showingBack) {
-            cardText.textContent = this.currentCards[this.currentIndex].back;
+            cardText.innerHTML = this.renderContent(this.currentCards[this.currentIndex].back);
             if (cardNotes) cardNotes.style.display = 'block';
             this.showingBack = true;
         } else {
-            cardText.textContent = this.currentCards[this.currentIndex].front;
+            cardText.innerHTML = this.renderContent(this.currentCards[this.currentIndex].front);
             if (cardNotes) cardNotes.style.display = 'none';
             this.showingBack = false;
         }
@@ -447,6 +477,16 @@ class FlashcardApp {
                 font-style: italic;
             }
 
+            .card-media {
+                max-width: 100%;
+                max-height: 220px;
+                border-radius: 8px;
+                margin-top: 10px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
             .audio-btn {
                 position: absolute;
                 bottom: 15px;
@@ -530,6 +570,16 @@ class FlashcardApp {
             .question-notes {
                 color: #666;
                 font-style: italic;
+            }
+
+            .card-media {
+                max-width: 100%;
+                max-height: 220px;
+                border-radius: 8px;
+                margin-top: 10px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .audio-btn-inline {
