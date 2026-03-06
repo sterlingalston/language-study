@@ -190,14 +190,93 @@ class FlashcardApp {
         grid.innerHTML = '';
 
         for (const [lang, cards] of Object.entries(this.languages)) {
-            const btn = document.createElement('div');
-            btn.className = 'language-btn';
-            btn.innerHTML = `
-                <h3>${lang}</h3>
-                <p>${cards.length} cards</p>
-            `;
-            btn.onclick = () => this.startSession(lang);
-            grid.appendChild(btn);
+            const label = document.createElement('label');
+            label.className = 'language-btn';
+
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = lang;
+            checkbox.className = 'deck-checkbox';
+            checkbox.addEventListener('change', () => {
+                label.classList.toggle('selected', checkbox.checked);
+                this._updateStartBtn();
+                this._updateRightPanel();
+            });
+
+            const info = document.createElement('div');
+            info.className = 'deck-info';
+            info.innerHTML = `<h3>${lang}</h3><p>${cards.length} cards</p>`;
+
+            label.appendChild(checkbox);
+            label.appendChild(info);
+            grid.appendChild(label);
+        }
+
+        this._updateStartBtn();
+        this._updateRightPanel();
+    }
+
+    _updateStartBtn() {
+        const btn = document.getElementById('startSelectedBtn');
+        if (!btn) return;
+        const checked = document.querySelectorAll('.deck-checkbox:checked');
+        btn.style.display = checked.length > 0 ? 'inline-block' : 'none';
+        const total = [...checked].reduce((sum, cb) => sum + (this.languages[cb.value]?.length || 0), 0);
+        btn.textContent = checked.length > 1 ? `Start (${total} combined cards)` : 'Start';
+    }
+
+    _updateRightPanel() {
+        const panel = document.getElementById('rightPanel');
+        if (!panel) return;
+
+        const checked = [...document.querySelectorAll('.deck-checkbox:checked')].map(cb => cb.value);
+
+        if (checked.length === 0) {
+            panel.innerHTML = '<div class="panel-placeholder"><p>Select decks on the left to preview their contents here.</p></div>';
+            return;
+        }
+
+        const totalCards = checked.reduce((sum, lang) => sum + (this.languages[lang]?.length || 0), 0);
+
+        let html = `<div class="panel-header"><h2>Card Preview &middot; ${totalCards} card${totalCards !== 1 ? 's' : ''}</h2></div>`;
+
+        for (const lang of checked) {
+            const cards = this.languages[lang];
+            html += `
+                <div class="deck-section">
+                    <div class="deck-section-title">${this.escapeHtml(lang)}</div>
+                    <table class="deck-table">
+                        ${cards.map(card => `
+                            <tr>
+                                <td class="card-front">${this.escapeHtml(card.front)}</td>
+                                <td class="card-back">${this.escapeHtml(card.back)}</td>
+                                ${card.notes ? `<td class="card-note">${this.escapeHtml(card.notes)}</td>` : '<td></td>'}
+                            </tr>
+                        `).join('')}
+                    </table>
+                </div>`;
+        }
+
+        panel.innerHTML = html;
+    }
+
+    startSelectedDecks() {
+        const checked = [...document.querySelectorAll('.deck-checkbox:checked')].map(cb => cb.value);
+        if (checked.length === 0) return;
+
+        const combined = checked.flatMap(lang => this.languages[lang]);
+        this.currentLanguage = checked.length === 1 ? checked[0] : checked.join(' + ');
+        this.currentCards = [...combined];
+        this.shuffleArray(this.currentCards);
+        this.currentIndex = 0;
+        this.showingBack = false;
+
+        if (this.currentMode === 'quiz') {
+            this.quizScore = 0;
+            this.quizAnswered = 0;
+            this.showQuizCard();
+        } else {
+            this.showFlashcard();
         }
     }
 
@@ -434,6 +513,9 @@ class FlashcardApp {
     addFlashcardStyles() {
         const style = document.createElement('style');
         style.textContent = `
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+            body, button, input { font-family: 'Inter', sans-serif; }
+
             .session-header {
                 text-align: center;
                 margin-bottom: 30px;
@@ -543,6 +625,9 @@ class FlashcardApp {
     addQuizStyles() {
         const style = document.createElement('style');
         style.textContent = `
+            @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+            body, button, input { font-family: 'Inter', sans-serif; }
+
             .quiz-card {
                 background: white;
                 border-radius: 15px;
