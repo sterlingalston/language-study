@@ -197,6 +197,7 @@ class FlashcardApp {
             checkbox.type = 'checkbox';
             checkbox.value = lang;
             checkbox.className = 'deck-checkbox';
+            checkbox.checked = true;
             checkbox.addEventListener('change', () => {
                 label.classList.toggle('selected', checkbox.checked);
                 this._updateStartBtn();
@@ -207,6 +208,7 @@ class FlashcardApp {
             info.className = 'deck-info';
             info.innerHTML = `<h3>${lang}</h3><p>${cards.length} cards</p>`;
 
+            label.classList.add('selected');
             label.appendChild(checkbox);
             label.appendChild(info);
             grid.appendChild(label);
@@ -229,18 +231,25 @@ class FlashcardApp {
         const panel = document.getElementById('rightPanel');
         if (!panel) return;
 
-        const checked = [...document.querySelectorAll('.deck-checkbox:checked')].map(cb => cb.value);
+        const checkedBoxes = document.querySelectorAll('.deck-checkbox:checked');
+        const allBoxes = document.querySelectorAll('.deck-checkbox');
 
-        if (checked.length === 0) {
-            panel.innerHTML = '<div class="panel-placeholder"><p>Select decks on the left to preview their contents here.</p></div>';
+        // On the home screen there are no checkboxes yet — show all loaded langs
+        // On the language screen use whatever is checked
+        const langs = allBoxes.length === 0
+            ? Object.keys(this.languages)
+            : [...checkedBoxes].map(cb => cb.value);
+
+        if (langs.length === 0) {
+            panel.innerHTML = '<div class="panel-placeholder"><p>Load vocabulary to see a preview here.</p></div>';
             return;
         }
 
-        const totalCards = checked.reduce((sum, lang) => sum + (this.languages[lang]?.length || 0), 0);
+        const totalCards = langs.reduce((sum, lang) => sum + (this.languages[lang]?.length || 0), 0);
 
         let html = `<div class="panel-header"><h2>Card Preview &middot; ${totalCards} card${totalCards !== 1 ? 's' : ''}</h2></div>`;
 
-        for (const lang of checked) {
+        for (const lang of langs) {
             const cards = this.languages[lang];
             html += `
                 <div class="deck-section">
