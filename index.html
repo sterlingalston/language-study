@@ -346,11 +346,15 @@
         <div class="left-panel">
             <div class="container">
                 <h1>The Forgettable Memory App</h1>
+                <p style="color:#667eea; font-size:0.82em; font-weight:500; margin:-18px 0 24px; line-height:1.6; letter-spacing:0.1px;">
+                    A minimalist Anki alternative — because your brain already forgets enough on its own.<br>
+                    <span style="color:#aaa; font-weight:400;">① Load your stuff &nbsp;·&nbsp; ② Quiz yourself &nbsp;·&nbsp; ③ Refresh &amp; it's gone</span>
+                </p>
 
                 <div id="homeScreen">
                     <div class="file-input-section">
-                        <h3>Load Your Language Data</h3>
-                        <p>Upload text files containing your vocabulary. Format each line as:</p>
+                        <h3>Load Your Data</h3>
+                        <p>Upload text files containing your entries. Format each line as:</p>
                         <div class="data-format">
                             word/phrase | translation | notes (optional)<br>
                             hello | hola | greeting<br>
@@ -365,16 +369,17 @@
                         <p>Enter a GitHub repo with a <code>vocabulary/</code> folder, or leave blank to use the default:</p>
                         <div style="display:flex; gap:6px; align-items:center;">
                             <input type="text" id="customRepoInput" placeholder="owner/repo (default: sterlingalston/language-study)" style="margin:0; flex:1;">
-                            <button onclick="fetchCustomRepo(event)" class="mode-btn" style="margin:0; white-space:nowrap; padding:9px 14px; font-size:0.85em;">Fetch Languages</button>
+                            <button onclick="fetchCustomRepo(event)" class="mode-btn" style="margin:0; white-space:nowrap; padding:9px 14px; font-size:0.85em;">Fetch Specialties</button>
                         </div>
-                        <p style="margin-top:10px;">Select a language to load vocabulary:</p>
+                        <p style="margin-top:10px;">Select a specialty to load:</p>
                         <select id="githubLanguageSelect">
-                            <option value="">-- Select Language --</option>
+                            <option value="">-- Select Specialty --</option>
                             <option value="Japanese">Japanese</option>
                             <option value="German">German</option>
                             <option value="Spanish">Spanish</option>
                             <option value="Chinese">Chinese</option>
                             <option value="Icelandic">Icelandic</option>
+                            <option value="Media Test">Media Test</option>
                         </select>
                         <div id="githubFileList" style="display: none; margin: 8px 0;">
                             <p>Available files:</p>
@@ -387,7 +392,7 @@
                         <h3>Or Load from Custom URL</h3>
                         <p>Enter a URL to a raw text file (works on GitHub Pages only):</p>
                         <input type="url" id="urlInput" placeholder="https://raw.githubusercontent.com/user/repo/main/vocab.txt">
-                        <input type="text" id="languageNameInput" placeholder="Language name (e.g., Spanish)">
+                        <input type="text" id="languageNameInput" placeholder="Specialty name (e.g., Spanish)">
                         <button onclick="loadFromUrl()" class="mode-btn" style="margin-top:4px;">Load from URL</button>
                     </div>
 
@@ -395,10 +400,13 @@
                         <h3>Or Paste Content Directly</h3>
                         <p>Copy the raw text from GitHub and paste it here (works everywhere):</p>
                         <textarea id="pasteInput" placeholder="Paste vocabulary here (word|translation|notes)"></textarea>
-                        <input type="text" id="pasteLanguageName" placeholder="Language name (e.g., Spanish)">
+                        <input type="text" id="pasteLanguageName" placeholder="Specialty name (e.g., Spanish)">
                         <button onclick="loadFromPaste()" class="mode-btn" style="margin-top:4px;">Load Pasted Content</button>
                     </div>
 
+                    <div id="noVocabWarning" style="display:none; color:#c0392b; background:#fdf2f2; border:1.5px solid #f5c6cb; border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:0.85em; text-align:left;">
+                        Please load at least one deck before starting.
+                    </div>
                     <div class="mode-selection">
                         <button class="mode-btn" onclick="showLanguages('flashcard')">📚 Flashcard Mode</button>
                         <button class="mode-btn" onclick="showLanguages('quiz')">🧠 Quiz Mode</button>
@@ -407,7 +415,7 @@
 
                 <div id="languageScreen" class="language-selection">
                     <button class="back-btn" onclick="showHome()">← Back</button>
-                    <h2 id="modeTitle">Select a Language</h2>
+                    <h2 id="modeTitle">Select a Specialty</h2>
                     <p style="color:#999; font-size:0.82em; margin: 6px 0 2px;">Select one or more decks to combine</p>
                     <div class="language-grid" id="languageGrid"></div>
                     <button id="startSelectedBtn" class="mode-btn" onclick="app.startSelectedDecks()" style="margin-top: 18px; display: none;">Start</button>

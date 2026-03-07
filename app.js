@@ -219,7 +219,7 @@ class FlashcardApp {
             : [...checkedBoxes].map(cb => cb.value);
 
         if (langs.length === 0) {
-            panel.innerHTML = '<div class="panel-placeholder"><p>Load vocabulary to see a preview here.</p></div>';
+            panel.innerHTML = '<div class="panel-placeholder"><p>Load a deck to see a preview here.</p></div>';
             return;
         }
 
@@ -787,11 +787,16 @@ function showHome() {
 }
 
 function showLanguages(mode) {
+    if (Object.keys(app.languages).length === 0) {
+        document.getElementById('noVocabWarning').style.display = 'block';
+        return;
+    }
+    document.getElementById('noVocabWarning').style.display = 'none';
     app.currentMode = mode;
     document.getElementById('homeScreen').style.display = 'none';
     document.getElementById('languageScreen').style.display = 'block';
     document.getElementById('modeTitle').textContent =
-        mode === 'flashcard' ? 'Select Language for Flashcards' : 'Select Language for Quiz';
+        mode === 'flashcard' ? 'Select Specialty for Flashcards' : 'Select Specialty for Quiz';
 }
 
 function loadFiles() {
@@ -820,7 +825,7 @@ function loadFiles() {
             filesProcessed++;
             if (filesProcessed === files.length) {
                 app.updateLanguageGrid();
-                alert(`Loaded ${Object.keys(app.languages).length} language(s) successfully!`);
+                alert(`Loaded ${Object.keys(app.languages).length} deck(s) successfully!`);
             }
         };
         reader.readAsText(file);
@@ -840,7 +845,7 @@ async function loadFromUrl() {
     }
 
     if (!languageName) {
-        alert('Please enter a language name!');
+        alert('Please enter a specialty name!');
         return;
     }
 
@@ -862,7 +867,7 @@ async function loadFromUrl() {
         if (result.success) {
             app.updateLanguageGrid();
 
-            let message = `Successfully loaded ${result.count} vocabulary entries for ${languageName}!`;
+            let message = `Successfully loaded ${result.count} entries for ${languageName}!`;
 
             // Check if localStorage is available
             try {
@@ -905,7 +910,7 @@ function loadFromPaste() {
         }
 
         if (!languageName) {
-            alert('Please enter a language name!');
+            alert('Please enter a specialty name!');
             return;
         }
 
@@ -916,7 +921,7 @@ function loadFromPaste() {
             const saved = app.saveToLocalStorage();
             app.updateLanguageGrid();
 
-            let message = `Successfully loaded ${cards.length} vocabulary entries for ${languageName}!`;
+            let message = `Successfully loaded ${cards.length} entries for ${languageName}!`;
 
             // Check if localStorage is available
             try {
@@ -930,7 +935,7 @@ function loadFromPaste() {
             pasteInput.value = '';
             languageNameInput.value = '';
         } else {
-            alert('No valid vocabulary entries found. Make sure format is: word|translation|notes');
+            alert('No valid entries found. Make sure format is: term|definition|notes');
         }
     } catch (error) {
         alert(`Error: ${error.message}`);
@@ -946,7 +951,8 @@ const GITHUB_CONFIG = {
         'German': ['german_vocabulary.txt'],
         'Spanish': ['spanish_vocabulary.txt'],
         'Chinese': ['chinese_vocabulary.txt'],
-        'Icelandic': ['icelandic_vocabulary.txt']
+        'Icelandic': ['icelandic_vocabulary.txt'],
+        'Media Test': ['media_test.txt']
     }
 };
 
@@ -1001,7 +1007,7 @@ async function fetchCustomRepo(event) {
 
         const items = await res.json();
         const langDirs = items.filter(item => item.type === 'dir');
-        if (langDirs.length === 0) throw new Error('No language directories found inside vocabulary/');
+        if (langDirs.length === 0) throw new Error('No specialty directories found inside vocabulary/');
 
         const files = {};
         for (const dir of langDirs) {
@@ -1014,7 +1020,7 @@ async function fetchCustomRepo(event) {
             if (txtFiles.length > 0) files[dir.name] = txtFiles;
         }
 
-        if (Object.keys(files).length === 0) throw new Error('No .txt or .csv files found in any language directory');
+        if (Object.keys(files).length === 0) throw new Error('No .txt or .csv files found in any specialty directory');
 
         activeGithubConfig = {
             baseUrl: `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/HEAD/vocabulary`,
@@ -1077,7 +1083,7 @@ async function loadFromGithub(event) {
     const selectedLanguage = select.value;
 
     if (!selectedLanguage) {
-        alert('Please select a language first!');
+        alert('Please select a specialty first!');
         return;
     }
 
@@ -1128,7 +1134,7 @@ async function loadFromGithub(event) {
 
         app.updateLanguageGrid();
 
-        let message = `Successfully loaded ${totalLoaded} vocabulary entries!`;
+        let message = `Successfully loaded ${totalLoaded} entries!`;
 
         if (errors.length > 0) {
             message += '\n\nErrors:\n' + errors.join('\n');
