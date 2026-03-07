@@ -354,12 +354,27 @@
                 <div id="homeScreen">
                     <div class="file-input-section">
                         <h3>Load Your Data</h3>
-                        <p>Upload text files containing your entries. Format each line as:</p>
+                        <p>Upload <code>.txt</code> or <code>.csv</code> files. One entry per line:</p>
                         <div class="data-format">
-                            word/phrase | translation | notes (optional)<br>
+                            term | definition | notes (optional)<br>
                             hello | hola | greeting<br>
                             goodbye | adiós | farewell
                         </div>
+                        <p style="margin-top:10px;">Embed media by placing a URL in the <em>term</em> or <em>definition</em> field:</p>
+                        <div class="data-format">
+                            <span style="color:#667eea; font-weight:600;">Image</span> (.jpg .png .gif .webp .svg)<br>
+                            https://example.com/photo.jpg | What is this? | notes<br>
+                            <br>
+                            <span style="color:#667eea; font-weight:600;">Video</span> (.mp4 .webm .ogg)<br>
+                            https://example.com/clip.mp4 | Name this scene | notes<br>
+                            <br>
+                            <span style="color:#667eea; font-weight:600;">Audio</span> (.mp3 .wav .ogg)<br>
+                            https://example.com/sound.mp3 | What language is this? | notes<br>
+                            <br>
+                            <span style="color:#667eea; font-weight:600;">YouTube</span><br>
+                            https://youtube.com/watch?v=VIDEO_ID | Video title | notes
+                        </div>
+                        <p style="margin-top:8px; font-size:0.8em; color:#aaa;">Text before or after the URL becomes a label above the media.</p>
                         <input type="file" id="fileInput" multiple accept=".txt,.csv">
                         <button onclick="loadFiles()" class="mode-btn" style="margin-top:8px;">Load Files</button>
                     </div>
@@ -390,10 +405,23 @@
 
                     <div class="file-input-section">
                         <h3>Or Load from Custom URL</h3>
-                        <p>Enter a URL to a raw text file (works on GitHub Pages only):</p>
+                        <p>Point directly to a raw <code>.txt</code> or <code>.csv</code> file (requires a served page, not <code>file://</code>):</p>
                         <input type="url" id="urlInput" placeholder="https://raw.githubusercontent.com/user/repo/main/vocab.txt">
                         <input type="text" id="languageNameInput" placeholder="Specialty name (e.g., Spanish)">
                         <button onclick="loadFromUrl()" class="mode-btn" style="margin-top:4px;">Load from URL</button>
+                        <p style="margin-top:12px;">To use <strong>Fetch Specialties</strong> with your own repo, structure it like this:</p>
+                        <div class="data-format">
+                            your-repo/<br>
+                            &nbsp;&nbsp;vocabulary/<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Spanish/<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;basics.txt<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;verbs.txt<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Science/<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cells.txt<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;Any Specialty/<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;any_file.txt
+                        </div>
+                        <p style="font-size:0.8em; color:#aaa; margin-top:4px;">Subdirectory names become specialty names. Files inside become loadable decks.</p>
                     </div>
 
                     <div class="file-input-section">

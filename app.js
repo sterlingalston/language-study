@@ -42,41 +42,70 @@ class FlashcardApp {
         return langCode || 'en-us';
     }
 
-    // Play pronunciation using VoiceRSS API
     playPronunciation(text, language) {
-        // Clean text (remove romaji/romanization after slashes)
         const cleanText = text.split('/')[0].trim();
         const langCode = this.getVoiceRSSLanguageCode(language);
 
-        console.log('Playing audio for:', cleanText, 'Language:', langCode);
+        if ('speechSynthesis' in window) {
+            const voices = speechSynthesis.getVoices();
+            if (voices.length) {
+                // Voices already loaded (iOS / some browsers)
+                const voice = this._findVoice(voices, langCode);
+                if (voice) { this._speakWith(cleanText, voice); return; }
+                // Voices loaded but none match — fall through to VoiceRSS
+            } else {
+                // Voices not yet loaded (Chrome desktop loads them async)
+                speechSynthesis.addEventListener('voiceschanged', () => {
+                    const voice = this._findVoice(speechSynthesis.getVoices(), langCode);
+                    if (voice) this._speakWith(cleanText, voice);
+                    else this._playVoiceRSS(cleanText, langCode);
+                }, { once: true });
+                return;
+            }
+        }
 
-        // VoiceRSS API endpoint
+        this._playVoiceRSS(cleanText, langCode);
+    }
+
+    _findVoice(voices, langCode) {
+        const prefix = langCode.split('-')[0].toLowerCase();
+        // Prefer an exact lang match, fall back to prefix match
+        return voices.find(v => v.lang.toLowerCase() === langCode.toLowerCase())
+            || voices.find(v => v.lang.toLowerCase().startsWith(prefix))
+            || null;
+    }
+
+    _speakWith(text, voice) {
+        speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.voice = voice;
+        utter.lang = voice.lang;
+        speechSynthesis.speak(utter);
+    }
+
+    _playVoiceRSS(cleanText, langCode) {
         const apiKey = 'a9d1a2963a804175a694b80d51e4af6f';
         const audioUrl = `https://api.voicerss.org/?key=${apiKey}&hl=${langCode}&src=${encodeURIComponent(cleanText)}&c=MP3&f=44khz_16bit_stereo`;
-
-        console.log('Audio URL:', audioUrl);
-
-        // Create and play audio
         const audio = new Audio(audioUrl);
-
-        audio.addEventListener('error', (e) => {
-            console.error('Audio error:', e);
-            alert('Failed to load audio. Check console for details.');
-        });
-
-        audio.addEventListener('canplaythrough', () => {
-            console.log('Audio loaded successfully');
-        });
-
-        audio.play().catch(err => {
-            console.error('Play error:', err);
-            alert('Could not play audio. Error: ' + err.message);
-        });
+        audio.addEventListener('error', (e) => console.error('VoiceRSS audio error:', e));
+        audio.play().catch(err => console.error('VoiceRSS play error:', err));
     }
 
     init() {
         try { localStorage.removeItem('languageData'); } catch (_) {}
+        this._homeHTML = document.body.innerHTML;
         this.updateLanguageGrid();
+    }
+
+    _restoreHome() {
+        if (this._flashcardKeyHandler) {
+            document.removeEventListener('keydown', this._flashcardKeyHandler);
+            this._flashcardKeyHandler = null;
+        }
+        document.body.innerHTML = this._homeHTML;
+        this.updateLanguageGrid();
+        const githubSelect = document.getElementById('githubLanguageSelect');
+        if (githubSelect) githubSelect.addEventListener('change', handleGithubLanguageChange);
     }
 
     saveToLocalStorage() {}
@@ -98,10 +127,17 @@ class FlashcardApp {
         }
 
         // Video
-        const vidMatch = text.match(/https?:\/\/\S+\.(?:mp4|webm|ogg)(?:\?\S*)?/i);
+        const vidMatch = text.match(/https?:\/\/\S+\.(?:mp4|webm)(?:\?\S*)?/i);
         if (vidMatch) {
             const label = text.replace(vidMatch[0], '').trim();
             return `${label ? `<div>${this.escapeHtml(label)}</div>` : ''}<video controls class="card-media"><source src="${vidMatch[0]}"></video>`;
+        }
+
+        // Audio
+        const audioMatch = text.match(/https?:\/\/\S+\.(?:mp3|wav|ogg|aac|flac)(?:\?\S*)?/i);
+        if (audioMatch) {
+            const label = text.replace(audioMatch[0], '').trim();
+            return `${label ? `<div>${this.escapeHtml(label)}</div>` : ''}<audio controls style="width:100%; margin-top:10px;"><source src="${audioMatch[0]}"></audio>`;
         }
 
         return this.escapeHtml(text);
@@ -490,11 +526,7 @@ class FlashcardApp {
     }
 
     backToLanguages() {
-        if (this._flashcardKeyHandler) {
-            document.removeEventListener('keydown', this._flashcardKeyHandler);
-            this._flashcardKeyHandler = null;
-        }
-        location.reload();
+        this._restoreHome();
     }
 
     addFlashcardStyles() {
@@ -783,7 +815,7 @@ class FlashcardApp {
 const app = new FlashcardApp();
 
 function showHome() {
-    location.reload();
+    app._restoreHome();
 }
 
 function showLanguages(mode) {
