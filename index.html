@@ -8,6 +8,54 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --surface: #ffffff;
+            --surface-alt: #fafafa;
+            --surface-accent: #eef0ff;
+            --panel: rgba(255,255,255,0.93);
+            --text-1: #1a1a2e;
+            --text-2: #333;
+            --text-3: #777;
+            --text-4: #aaa;
+            --text-5: #555;
+            --border: #ddd;
+            --border-light: #e9ecef;
+            --border-accent: #e8ecff;
+            --accent: #667eea;
+            --accent-2: #764ba2;
+            --deck-hover-bg: #f0f4ff;
+            --deck-selected-bg: #eef0ff;
+            --deck-btn-bg: #f8f9fa;
+            --table-row-border: #f3f3f3;
+            --panel-divider: #eee;
+            --shadow: rgba(0,0,0,0.15);
+        }
+
+        [data-theme="dark"] {
+            --bg: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            --surface: #1e1e2e;
+            --surface-alt: #181825;
+            --surface-accent: #1e1e3f;
+            --panel: rgba(18,18,30,0.98);
+            --text-1: #cdd6f4;
+            --text-2: #bac2de;
+            --text-3: #a6adc8;
+            --text-4: #6c7086;
+            --text-5: #9399b2;
+            --border: #313244;
+            --border-light: #313244;
+            --border-accent: #2a2a4a;
+            --accent: #89b4fa;
+            --accent-2: #cba6f7;
+            --deck-hover-bg: #2a2a4a;
+            --deck-selected-bg: #2a2a4a;
+            --deck-btn-bg: #181825;
+            --table-row-border: #313244;
+            --panel-divider: #313244;
+            --shadow: rgba(0,0,0,0.5);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -16,9 +64,10 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg);
             min-height: 100vh;
             display: flex;
+            transition: background 0.3s;
         }
 
         .app-layout {
@@ -38,16 +87,39 @@
         }
 
         .container {
-            background: white;
+            background: var(--surface);
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 20px 40px var(--shadow);
             padding: 36px;
             width: 100%;
             text-align: center;
+            position: relative;
+            transition: background 0.3s;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: none;
+            border: 1.5px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 0.78em;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-3);
+            cursor: pointer;
+            transition: all 0.2s;
+            letter-spacing: 0.3px;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         h1 {
-            color: #1a1a2e;
+            color: var(--text-1);
             margin-bottom: 28px;
             font-size: 2em;
             font-weight: 700;
@@ -57,7 +129,7 @@
         h2 {
             font-size: 1.3em;
             font-weight: 600;
-            color: #1a1a2e;
+            color: var(--text-1);
         }
 
         .mode-selection {
@@ -67,7 +139,7 @@
         }
 
         .mode-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
             color: white;
             border: none;
             padding: 15px;
@@ -98,8 +170,8 @@
         }
 
         .language-btn {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
+            background: var(--deck-btn-bg);
+            border: 2px solid var(--border-light);
             padding: 13px;
             border-radius: 10px;
             cursor: pointer;
@@ -112,20 +184,20 @@
         }
 
         .language-btn:hover {
-            border-color: #667eea;
-            background: #f0f4ff;
+            border-color: var(--accent);
+            background: var(--deck-hover-bg);
         }
 
         .language-btn.selected {
-            border-color: #667eea;
-            background: #eef0ff;
+            border-color: var(--accent);
+            background: var(--deck-selected-bg);
         }
 
         .language-btn input[type="checkbox"] {
             width: 17px;
             height: 17px;
             flex-shrink: 0;
-            accent-color: #667eea;
+            accent-color: var(--accent);
             cursor: pointer;
         }
 
@@ -133,13 +205,13 @@
             margin: 0 0 3px 0;
             font-size: 0.9em;
             font-weight: 600;
-            color: #333;
+            color: var(--text-2);
         }
 
         .deck-info p {
             margin: 0;
             font-size: 0.78em;
-            color: #999;
+            color: var(--text-4);
         }
 
         .back-btn {
@@ -167,21 +239,21 @@
         .file-input-section {
             margin: 14px 0;
             padding: 18px;
-            border: 2px dashed #ddd;
+            border: 2px dashed var(--border);
             border-radius: 12px;
-            background: #fafafa;
+            background: var(--surface-alt);
             text-align: left;
         }
 
         .file-input-section h3 {
             margin-bottom: 8px;
-            color: #333;
+            color: var(--text-2);
             font-size: 0.95em;
             font-weight: 600;
         }
 
         .file-input-section p {
-            color: #777;
+            color: var(--text-3);
             font-size: 0.83em;
             margin-bottom: 8px;
             line-height: 1.5;
@@ -191,7 +263,7 @@
             margin: 8px 0;
             font-family: 'Inter', sans-serif;
             font-size: 0.84em;
-            color: #555;
+            color: var(--text-5);
         }
 
         input[type="url"],
@@ -200,14 +272,14 @@
         select {
             font-family: 'Inter', sans-serif;
             font-size: 0.92em;
-            border: 1.5px solid #ddd;
+            border: 1.5px solid var(--border);
             border-radius: 8px;
             padding: 9px 12px;
             width: 100%;
             margin: 6px 0;
             transition: border-color 0.2s;
-            color: #333;
-            background: white;
+            color: var(--text-2);
+            background: var(--surface);
         }
 
         input[type="url"]:focus,
@@ -215,7 +287,7 @@
         textarea:focus,
         select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: var(--accent);
         }
 
         textarea {
@@ -224,23 +296,24 @@
         }
 
         .data-format {
-            background: #eef0ff;
+            background: var(--surface-accent);
             padding: 11px 14px;
             border-radius: 8px;
             margin: 8px 0;
             font-family: 'Courier New', monospace;
             font-size: 0.81em;
-            color: #445;
+            color: var(--text-2);
             line-height: 1.7;
         }
 
         /* Right panel */
         .right-panel {
             flex: 1;
-            background: rgba(255, 255, 255, 0.93);
+            background: var(--panel);
             overflow-y: auto;
             padding: 32px 36px;
             min-height: 100vh;
+            transition: background 0.3s;
         }
 
         .panel-placeholder {
@@ -249,7 +322,7 @@
             justify-content: center;
             height: 100%;
             min-height: 300px;
-            color: #bbb;
+            color: var(--text-4);
             text-align: center;
         }
 
@@ -263,13 +336,13 @@
         .panel-header {
             margin-bottom: 24px;
             padding-bottom: 14px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 2px solid var(--panel-divider);
         }
 
         .panel-header h2 {
             font-size: 1.1em;
             font-weight: 700;
-            color: #1a1a2e;
+            color: var(--text-1);
             letter-spacing: -0.2px;
         }
 
@@ -282,10 +355,10 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.2px;
-            color: #667eea;
+            color: var(--accent);
             margin-bottom: 10px;
             padding-bottom: 6px;
-            border-bottom: 1px solid #e8ecff;
+            border-bottom: 1px solid var(--border-accent);
         }
 
         .deck-table {
@@ -295,7 +368,7 @@
         }
 
         .deck-table tr {
-            border-bottom: 1px solid #f3f3f3;
+            border-bottom: 1px solid var(--table-row-border);
         }
 
         .deck-table tr:last-child {
@@ -310,17 +383,17 @@
 
         .card-front {
             font-weight: 600;
-            color: #1a1a2e;
+            color: var(--text-1);
             width: 30%;
         }
 
         .card-back {
-            color: #444;
+            color: var(--text-2);
             width: 35%;
         }
 
         .card-note {
-            color: #aaa;
+            color: var(--text-4);
             font-size: 0.85em;
             font-style: italic;
             width: 35%;
@@ -345,8 +418,9 @@
     <div class="app-layout">
         <div class="left-panel">
             <div class="container">
+                <button class="theme-toggle" onclick="toggleTheme()" id="themeToggleBtn">Dark</button>
                 <h1>The Forgettable Memory App</h1>
-                <p style="color:#667eea; font-size:0.82em; font-weight:500; margin:-18px 0 24px; line-height:1.6; letter-spacing:0.1px;">
+                <p style="color:var(--accent); font-size:0.82em; font-weight:500; margin:-18px 0 24px; line-height:1.6; letter-spacing:0.1px;">
                     A minimalist Anki alternative — because your brain already forgets enough on its own.<br>
                     <span style="color:#aaa; font-weight:400;">① Load your stuff &nbsp;·&nbsp; ② Quiz yourself &nbsp;·&nbsp; ③ Refresh &amp; it's gone</span>
                 </p>
@@ -432,6 +506,7 @@
                         <button onclick="loadFromPaste()" class="mode-btn" style="margin-top:4px;">Load Pasted Content</button>
                     </div>
 
+                    <div id="loadStatus" style="display:none; border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:0.85em; text-align:left; transition: opacity 0.5s;"></div>
                     <div id="noVocabWarning" style="display:none; color:#c0392b; background:#fdf2f2; border:1.5px solid #f5c6cb; border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:0.85em; text-align:left;">
                         Please load at least one deck before starting.
                     </div>
@@ -444,7 +519,7 @@
                 <div id="languageScreen" class="language-selection">
                     <button class="back-btn" onclick="showHome()">← Back</button>
                     <h2 id="modeTitle">Select a Specialty</h2>
-                    <p style="color:#999; font-size:0.82em; margin: 6px 0 2px;">Select one or more decks to combine</p>
+                    <p style="color:var(--text-4); font-size:0.82em; margin: 6px 0 2px;">Select one or more decks to combine</p>
                     <div class="language-grid" id="languageGrid"></div>
                     <button id="startSelectedBtn" class="mode-btn" onclick="app.startSelectedDecks()" style="margin-top: 18px; display: none;">Start</button>
                 </div>
@@ -459,5 +534,27 @@
     </div>
 
     <script src="app.js?v=22"></script>
+    <script>
+        function toggleTheme() {
+            const isDark = document.documentElement.dataset.theme === 'dark';
+            document.documentElement.dataset.theme = isDark ? '' : 'dark';
+            document.getElementById('themeToggleBtn').textContent = isDark ? 'Dark' : 'Light';
+            try { localStorage.setItem('theme', isDark ? 'light' : 'dark'); } catch(_) {}
+        }
+
+        // Apply saved theme before first paint
+        (function() {
+            let saved;
+            try { saved = localStorage.getItem('theme'); } catch(_) {}
+            if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.dataset.theme = 'dark';
+                // Button text updated after DOM ready
+                document.addEventListener('DOMContentLoaded', () => {
+                    const btn = document.getElementById('themeToggleBtn');
+                    if (btn) btn.textContent = 'Light';
+                });
+            }
+        })();
+    </script>
 </body>
 </html>

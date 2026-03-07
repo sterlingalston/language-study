@@ -106,6 +106,11 @@ class FlashcardApp {
         this.updateLanguageGrid();
         const githubSelect = document.getElementById('githubLanguageSelect');
         if (githubSelect) githubSelect.addEventListener('change', handleGithubLanguageChange);
+        const btn = document.getElementById('themeToggleBtn');
+        if (btn) btn.textContent = document.documentElement.dataset.theme === 'dark' ? 'Light' : 'Dark';
+        // Re-show deck count so user knows vocab is still loaded
+        const total = Object.values(this.languages).reduce((s, c) => s + c.length, 0);
+        if (total > 0) showLoadStatus(`${Object.keys(this.languages).length} deck(s) loaded — ${total} entries.`);
     }
 
     saveToLocalStorage() {}
@@ -391,9 +396,27 @@ class FlashcardApp {
         const card = this.currentCards[this.currentIndex];
         this.currentChoices = this.generateChoices(card);
 
+        // Listening mode: ~40% of questions, only for text (not media URLs)
+        const hasMedia = /https?:\/\//.test(card.front);
+        this.currentIsListening = !hasMedia && Math.random() < 0.4;
+
         const choiceButtons = this.currentChoices.map((choice, i) =>
             `<button class="choice-btn" id="choice-${i}" onclick="app.selectChoice(${i})">${choice.back}</button>`
         ).join('');
+
+        const audioBtn = `<button class="audio-btn-inline" onclick="app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">🔊</button>`;
+
+        const questionContent = this.currentIsListening
+            ? `<div class="listening-prompt">
+                   <div class="listening-icon">${audioBtn}</div>
+                   <div class="listening-label">Listening question — identify what you hear</div>
+               </div>`
+            : `<div class="question-text">
+                   <span>${this.renderContent(card.front)}</span>
+                   ${audioBtn}
+               </div>`;
+
+        const questionPrompt = this.currentIsListening ? 'What are you hearing?' : 'What does this mean?';
 
         document.body.innerHTML = `
             <div class="container">
@@ -406,14 +429,8 @@ class FlashcardApp {
 
                 <div class="quiz-card">
                     <div class="question">
-                        <h3>What does this mean?</h3>
-                        <div class="question-text">
-                            <span>${this.renderContent(card.front)}</span>
-                            <button class="audio-btn-inline" onclick="app.playPronunciation('${card.front.replace(/'/g, "\\'")}', '${this.currentLanguage}')" title="Play pronunciation">
-                                🔊
-                            </button>
-                        </div>
-                        ${card.notes ? `<div class="question-notes">${card.notes}</div>` : ''}
+                        <h3>${questionPrompt}</h3>
+                        ${questionContent}
                     </div>
 
                     <div class="choices">
@@ -424,11 +441,25 @@ class FlashcardApp {
                 </div>
 
                 <div class="quiz-controls">
+                    <button id="skipBtn" onclick="app.skipQuizCard()">Skip</button>
                     <button id="nextBtn" onclick="app.nextQuizCard()" style="display: none;">Next →</button>
                 </div>
             </div>
         `;
         this.addQuizStyles();
+
+        if (this.currentIsListening) {
+            setTimeout(() => this.playPronunciation(card.front, this.currentLanguage), 400);
+        }
+    }
+
+    skipQuizCard() {
+        if (this.currentIndex < this.currentCards.length - 1) {
+            this.currentIndex++;
+            this.showQuizCard();
+        } else {
+            this.showQuizResults();
+        }
     }
 
     selectChoice(choiceIndex) {
@@ -448,11 +479,19 @@ class FlashcardApp {
             }
         });
 
-        const result = document.getElementById('result');
-        result.innerHTML = isCorrect
-            ? `<div class="correct">✅ Correct!</div>`
-            : `<div class="incorrect">❌ The correct answer was: <strong>${card.back}</strong></div>`;
+        // Reveal term for listening questions after answering
+        if (this.currentIsListening) {
+            const prompt = document.querySelector('.listening-prompt');
+            if (prompt) prompt.innerHTML = `<div class="question-text"><span>${this.escapeHtml(card.front)}</span></div>`;
+        }
 
+        const result = document.getElementById('result');
+        result.innerHTML = (isCorrect
+            ? `<div class="correct">✅ Correct!</div>`
+            : `<div class="incorrect">❌ The correct answer was: <strong>${card.back}</strong></div>`)
+            + (card.notes ? `<div class="result-notes">${this.escapeHtml(card.notes)}</div>` : '');
+
+        document.getElementById('skipBtn').style.display = 'none';
         document.getElementById('nextBtn').style.display = 'inline-block';
     }
 
@@ -533,17 +572,16 @@ class FlashcardApp {
         const style = document.createElement('style');
         style.textContent = `
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-            body, button, input { font-family: 'Inter', sans-serif; }
+            body, button, input { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-2); }
 
-            .session-header {
-                text-align: center;
-                margin-bottom: 30px;
-            }
+            .session-header { text-align: center; margin-bottom: 30px; color: var(--text-1); }
+            .session-header h2 { color: var(--text-1); }
+            .session-header p { color: var(--text-3); }
 
             .flashcard {
-                background: white;
+                background: var(--surface);
                 border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                box-shadow: 0 10px 30px var(--shadow);
                 padding: 40px;
                 margin: 30px 0;
                 min-height: 300px;
@@ -554,88 +592,39 @@ class FlashcardApp {
                 transition: transform 0.2s;
                 position: relative;
             }
+            .flashcard:hover { transform: translateY(-5px); }
 
-            .flashcard:hover {
-                transform: translateY(-5px);
-            }
-
-            .card-content {
-                text-align: center;
-                width: 100%;
-                position: relative;
-            }
-
-            .card-text {
-                font-size: 2em;
-                font-weight: bold;
-                margin-bottom: 20px;
-                color: #333;
-            }
-
-            .card-notes {
-                font-size: 1em;
-                color: #666;
-                font-style: italic;
-            }
+            .card-content { text-align: center; width: 100%; position: relative; }
+            .card-text { font-size: 2em; font-weight: bold; margin-bottom: 20px; color: var(--text-2); }
+            .card-notes { font-size: 1em; color: var(--text-3); font-style: italic; }
 
             .card-media {
-                max-width: 100%;
-                max-height: 220px;
-                border-radius: 8px;
-                margin-top: 10px;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
+                max-width: 100%; max-height: 220px; border-radius: 8px;
+                margin: 10px auto 0; display: block;
             }
 
             .audio-btn {
-                position: absolute;
-                bottom: 15px;
-                right: 15px;
-                background: #667eea;
-                border: none;
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                font-size: 1.5em;
-                cursor: pointer;
-                transition: all 0.2s;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                position: absolute; bottom: 15px; right: 15px;
+                background: var(--accent); border: none; border-radius: 50%;
+                width: 50px; height: 50px; font-size: 1.5em;
+                cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px var(--shadow);
             }
+            .audio-btn:hover { background: var(--accent-2); transform: scale(1.1); }
+            .audio-btn:active { transform: scale(0.95); }
 
-            .audio-btn:hover {
-                background: #764ba2;
-                transform: scale(1.1);
-            }
-
-            .audio-btn:active {
-                transform: scale(0.95);
-            }
-
-            .controls {
-                display: flex;
-                justify-content: space-between;
-                gap: 10px;
-                margin-top: 20px;
-            }
-
+            .controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 20px; }
             .controls button {
-                flex: 1;
-                padding: 15px;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                font-size: 1em;
+                flex: 1; padding: 15px; border: 1.5px solid var(--border);
+                border-radius: 10px; cursor: pointer; font-size: 1em;
+                background: var(--surface); color: var(--text-2);
             }
+            .flip-btn { background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%) !important; color: white !important; border: none !important; }
 
-            .flip-btn {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                color: white;
-            }
-
-            .shuffle-btn {
-                text-align: center;
-                margin-top: 20px;
+            .shuffle-btn { text-align: center; margin-top: 20px; }
+            .shuffle-btn button {
+                background: var(--surface); border: 1.5px solid var(--border);
+                border-radius: 10px; padding: 10px 20px; cursor: pointer;
+                color: var(--text-2); font-size: 0.95em;
             }
         `;
         document.head.appendChild(style);
@@ -645,141 +634,73 @@ class FlashcardApp {
         const style = document.createElement('style');
         style.textContent = `
             @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-            body, button, input { font-family: 'Inter', sans-serif; }
+            body, button, input { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-2); }
+
+            .session-header { text-align: center; margin-bottom: 20px; color: var(--text-1); }
+            .session-header h2 { color: var(--text-1); }
+            .session-header p { color: var(--text-3); }
 
             .quiz-card {
-                background: white;
+                background: var(--surface);
                 border-radius: 15px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-                padding: 30px;
-                margin: 20px 0;
+                box-shadow: 0 10px 30px var(--shadow);
+                padding: 30px; margin: 20px 0;
             }
-
-            .question {
-                text-align: center;
-                margin-bottom: 30px;
-            }
-
+            .question { text-align: center; margin-bottom: 30px; }
             .question-text {
-                font-size: 2em;
-                font-weight: bold;
-                margin: 20px 0;
-                color: #333;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 15px;
-            }
-
-            .question-notes {
-                color: #666;
-                font-style: italic;
+                font-size: 2em; font-weight: bold; margin: 20px 0;
+                color: var(--text-2); display: flex; align-items: center;
+                justify-content: center; gap: 15px;
             }
 
             .card-media {
-                max-width: 100%;
-                max-height: 220px;
-                border-radius: 8px;
-                margin-top: 10px;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
+                max-width: 100%; max-height: 220px; border-radius: 8px;
+                margin: 10px auto 0; display: block;
             }
 
             .audio-btn-inline {
-                background: #667eea;
-                border: none;
-                border-radius: 50%;
-                width: 45px;
-                height: 45px;
-                font-size: 1.3em;
-                cursor: pointer;
-                transition: all 0.2s;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                flex-shrink: 0;
+                background: var(--accent); border: none; border-radius: 50%;
+                width: 45px; height: 45px; font-size: 1.3em;
+                cursor: pointer; transition: all 0.2s;
+                box-shadow: 0 2px 8px var(--shadow); flex-shrink: 0;
             }
+            .audio-btn-inline:hover { background: var(--accent-2); transform: scale(1.1); }
+            .audio-btn-inline:active { transform: scale(0.95); }
 
-            .audio-btn-inline:hover {
-                background: #764ba2;
-                transform: scale(1.1);
-            }
-
-            .audio-btn-inline:active {
-                transform: scale(0.95);
-            }
-
-            .choices {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 12px;
-                margin: 20px 0;
-            }
-
+            .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
             .choice-btn {
-                padding: 18px 12px;
-                font-size: 1em;
-                border: 2px solid #ddd;
-                border-radius: 10px;
-                background: white;
-                cursor: pointer;
-                transition: all 0.15s;
-                text-align: center;
-                line-height: 1.4;
+                padding: 18px 12px; font-size: 1em;
+                border: 2px solid var(--border); border-radius: 10px;
+                background: var(--surface); color: var(--text-2);
+                cursor: pointer; transition: all 0.15s; text-align: center; line-height: 1.4;
             }
+            .choice-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--deck-hover-bg); }
+            .choice-btn:disabled { cursor: default; }
 
-            .choice-btn:hover:not(:disabled) {
-                border-color: #667eea;
-                background: #f0f4ff;
-            }
+            .choice-correct { background: #d4edda !important; border-color: #28a745 !important; color: #155724; }
+            .choice-wrong   { background: #f8d7da !important; border-color: #dc3545 !important; color: #721c24; }
 
-            .choice-btn:disabled {
-                cursor: default;
-            }
+            .result { margin: 15px 0; padding: 12px; border-radius: 10px; text-align: center; font-size: 1.1em; }
+            .correct   { background: #d4edda; color: #155724; }
+            .incorrect { background: #f8d7da; color: #721c24; }
+            .result-notes { margin-top: 8px; font-size: 0.85em; color: var(--text-3); font-style: italic; }
 
-            .choice-correct {
-                background: #d4edda !important;
-                border-color: #28a745 !important;
-                color: #155724;
-            }
+            .listening-prompt { text-align: center; padding: 20px 0; }
+            .listening-icon { margin-bottom: 12px; }
+            .listening-icon .audio-btn-inline { width: 64px; height: 64px; font-size: 1.8em; }
+            .listening-label { font-size: 0.82em; color: var(--text-3); letter-spacing: 0.3px; }
 
-            .choice-wrong {
-                background: #f8d7da !important;
-                border-color: #dc3545 !important;
-                color: #721c24;
-            }
-
-            .result {
-                margin: 15px 0;
-                padding: 12px;
-                border-radius: 10px;
-                text-align: center;
-                font-size: 1.1em;
-            }
-
-            .correct {
-                background: #d4edda;
-                color: #155724;
-            }
-
-            .incorrect {
-                background: #f8d7da;
-                color: #721c24;
-            }
-
-            .quiz-controls {
-                text-align: center;
-                margin-top: 15px;
-            }
-
+            .quiz-controls { text-align: center; margin-top: 15px; display: flex; justify-content: center; gap: 10px; }
             .quiz-controls button {
-                margin: 0 10px;
-                padding: 12px 30px;
-                border: none;
-                border-radius: 8px;
-                cursor: pointer;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                padding: 12px 30px; border: none; border-radius: 8px;
+                cursor: pointer; font-size: 1em;
+                background: linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
                 color: white;
-                font-size: 1em;
+            }
+            #skipBtn {
+                background: var(--surface) !important;
+                color: var(--text-3) !important;
+                border: 1.5px solid var(--border) !important;
             }
         `;
         document.head.appendChild(style);
@@ -788,31 +709,31 @@ class FlashcardApp {
     addResultStyles() {
         const style = document.createElement('style');
         style.textContent = `
-            .quiz-results {
-                text-align: center;
-            }
-
-            .score-display {
-                margin: 30px 0;
-            }
-
-            .score {
-                font-size: 3em;
-                font-weight: bold;
-                color: #333;
-            }
-
-            .percentage {
-                font-size: 2em;
-                color: #667eea;
-                margin-top: 10px;
-            }
+            .quiz-results { text-align: center; }
+            .score-display { margin: 30px 0; }
+            .score { font-size: 3em; font-weight: bold; color: var(--text-2); }
+            .percentage { font-size: 2em; color: var(--accent); margin-top: 10px; }
         `;
         document.head.appendChild(style);
     }
 }
 
 const app = new FlashcardApp();
+
+function showLoadStatus(msg, isError = false) {
+    const el = document.getElementById('loadStatus');
+    if (!el) return;
+    el.textContent = msg;
+    el.style.display = 'block';
+    el.style.opacity = '1';
+    el.style.color = isError ? '#c0392b' : '#155724';
+    el.style.background = isError ? '#fdf2f2' : '#d4edda';
+    el.style.border = `1.5px solid ${isError ? '#f5c6cb' : '#c3e6cb'}`;
+    if (!isError) {
+        clearTimeout(el._fadeTimer);
+        el._fadeTimer = setTimeout(() => { el.style.opacity = '0'; }, 3000);
+    }
+}
 
 function showHome() {
     app._restoreHome();
@@ -857,7 +778,7 @@ function loadFiles() {
             filesProcessed++;
             if (filesProcessed === files.length) {
                 app.updateLanguageGrid();
-                alert(`Loaded ${Object.keys(app.languages).length} deck(s) successfully!`);
+                showLoadStatus(`Loaded ${Object.keys(app.languages).length} deck(s).`);
             }
         };
         reader.readAsText(file);
@@ -899,17 +820,7 @@ async function loadFromUrl() {
         if (result.success) {
             app.updateLanguageGrid();
 
-            let message = `Successfully loaded ${result.count} entries for ${languageName}!`;
-
-            // Check if localStorage is available
-            try {
-                localStorage.setItem('test', 'test');
-                localStorage.removeItem('test');
-            } catch (e) {
-                message += '\n\nNote: Data will only last this session.';
-            }
-
-            alert(message);
+            showLoadStatus(`Loaded ${result.count} entries for "${languageName}".`);
             urlInput.value = '';
             languageNameInput.value = '';
         } else {
@@ -953,17 +864,7 @@ function loadFromPaste() {
             const saved = app.saveToLocalStorage();
             app.updateLanguageGrid();
 
-            let message = `Successfully loaded ${cards.length} entries for ${languageName}!`;
-
-            // Check if localStorage is available
-            try {
-                localStorage.setItem('test', 'test');
-                localStorage.removeItem('test');
-            } catch (e) {
-                message += '\n\nNote: Data will only last this session (localStorage blocked when opening file directly). Use GitHub Pages for data persistence!';
-            }
-
-            alert(message);
+            showLoadStatus(`Loaded ${cards.length} entries for "${languageName}".`);
             pasteInput.value = '';
             languageNameInput.value = '';
         } else {
@@ -1166,21 +1067,11 @@ async function loadFromGithub(event) {
 
         app.updateLanguageGrid();
 
-        let message = `Successfully loaded ${totalLoaded} entries!`;
-
         if (errors.length > 0) {
-            message += '\n\nErrors:\n' + errors.join('\n');
+            showLoadStatus(`Loaded ${totalLoaded} entries. Errors: ${errors.join('; ')}`, true);
+        } else {
+            showLoadStatus(`Loaded ${totalLoaded} entries across ${checkboxes.length} file(s).`);
         }
-
-        // Check if localStorage is available
-        try {
-            localStorage.setItem('test', 'test');
-            localStorage.removeItem('test');
-        } catch (e) {
-            message += '\n\nNote: Data will only last this session.';
-        }
-
-        alert(message);
 
         // Reset selection
         select.value = '';
