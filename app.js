@@ -75,33 +75,11 @@ class FlashcardApp {
     }
 
     init() {
-        this.loadLocalStorage();
+        try { localStorage.removeItem('languageData'); } catch (_) {}
         this.updateLanguageGrid();
     }
 
-    loadLocalStorage() {
-        try {
-            const stored = localStorage.getItem('languageData');
-            if (stored) {
-                this.languages = JSON.parse(stored);
-            }
-        } catch (error) {
-            console.warn('localStorage not available:', error.message);
-            // Data will only persist in memory during this session
-        }
-    }
-
-    saveToLocalStorage() {
-        try {
-            localStorage.setItem('languageData', JSON.stringify(this.languages));
-        } catch (error) {
-            console.warn('Could not save to localStorage:', error.message);
-            // App will still work, but data won't persist after page refresh
-            if (error.message.includes('insecure') || error.name === 'SecurityError') {
-                console.info('Tip: Use GitHub Pages or run a local server (npx serve) for data persistence');
-            }
-        }
-    }
+    saveToLocalStorage() {}
 
     renderContent(text) {
         // YouTube
