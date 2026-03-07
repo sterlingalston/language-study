@@ -45,45 +45,6 @@ class FlashcardApp {
     playPronunciation(text, language) {
         const cleanText = text.split('/')[0].trim();
         const langCode = this.getVoiceRSSLanguageCode(language);
-
-        if ('speechSynthesis' in window) {
-            const voices = speechSynthesis.getVoices();
-            if (voices.length) {
-                // Voices already loaded (iOS / some browsers)
-                const voice = this._findVoice(voices, langCode);
-                if (voice) { this._speakWith(cleanText, voice); return; }
-                // Voices loaded but none match — fall through to VoiceRSS
-            } else {
-                // Voices not yet loaded (Chrome desktop loads them async)
-                speechSynthesis.addEventListener('voiceschanged', () => {
-                    const voice = this._findVoice(speechSynthesis.getVoices(), langCode);
-                    if (voice) this._speakWith(cleanText, voice);
-                    else this._playVoiceRSS(cleanText, langCode);
-                }, { once: true });
-                return;
-            }
-        }
-
-        this._playVoiceRSS(cleanText, langCode);
-    }
-
-    _findVoice(voices, langCode) {
-        const prefix = langCode.split('-')[0].toLowerCase();
-        // Prefer an exact lang match, fall back to prefix match
-        return voices.find(v => v.lang.toLowerCase() === langCode.toLowerCase())
-            || voices.find(v => v.lang.toLowerCase().startsWith(prefix))
-            || null;
-    }
-
-    _speakWith(text, voice) {
-        speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text);
-        utter.voice = voice;
-        utter.lang = voice.lang;
-        speechSynthesis.speak(utter);
-    }
-
-    _playVoiceRSS(cleanText, langCode) {
         const apiKey = 'a9d1a2963a804175a694b80d51e4af6f';
         const audioUrl = `https://api.voicerss.org/?key=${apiKey}&hl=${langCode}&src=${encodeURIComponent(cleanText)}&c=MP3&f=44khz_16bit_stereo`;
         const audio = new Audio(audioUrl);
