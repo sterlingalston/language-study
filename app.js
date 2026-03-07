@@ -950,6 +950,86 @@ const GITHUB_CONFIG = {
     }
 };
 
+// Active config — null means use GITHUB_CONFIG
+let activeGithubConfig = null;
+
+function parseGithubRepo(input) {
+    input = input.trim().replace(/\.git$/, '');
+    const urlMatch = input.match(/github\.com\/([^\/\s]+)\/([^\/\s]+)/);
+    if (urlMatch) return { owner: urlMatch[1], repo: urlMatch[2] };
+    const slashMatch = input.match(/^([^\/\s]+)\/([^\/\s]+)$/);
+    if (slashMatch) return { owner: slashMatch[1], repo: slashMatch[2] };
+    return null;
+}
+
+function populateLanguageSelect(config) {
+    const select = document.getElementById('githubLanguageSelect');
+    select.innerHTML = '<option value="">-- Select Language --</option>';
+    for (const lang of Object.keys(config.files)) {
+        const option = document.createElement('option');
+        option.value = lang;
+        option.textContent = lang;
+        select.appendChild(option);
+    }
+    document.getElementById('githubFileList').style.display = 'none';
+}
+
+async function fetchCustomRepo(event) {
+    const input = document.getElementById('customRepoInput').value.trim();
+
+    if (!input) {
+        activeGithubConfig = null;
+        populateLanguageSelect(GITHUB_CONFIG);
+        return;
+    }
+
+    const parsed = parseGithubRepo(input);
+    if (!parsed) {
+        alert('Could not parse repository. Use format: owner/repo or https://github.com/owner/repo');
+        return;
+    }
+
+    const btn = event.target;
+    const originalText = btn.textContent;
+    btn.textContent = 'Fetching...';
+    btn.disabled = true;
+
+    try {
+        const apiBase = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/vocabulary`;
+        const res = await fetch(apiBase);
+        if (!res.ok) throw new Error(`GitHub API returned ${res.status} — check the repo name and that it has a vocabulary/ folder`);
+
+        const items = await res.json();
+        const langDirs = items.filter(item => item.type === 'dir');
+        if (langDirs.length === 0) throw new Error('No language directories found inside vocabulary/');
+
+        const files = {};
+        for (const dir of langDirs) {
+            const dirRes = await fetch(`${apiBase}/${dir.name}`);
+            if (!dirRes.ok) continue;
+            const dirItems = await dirRes.json();
+            const txtFiles = dirItems
+                .filter(f => f.type === 'file' && (f.name.endsWith('.txt') || f.name.endsWith('.csv')))
+                .map(f => f.name);
+            if (txtFiles.length > 0) files[dir.name] = txtFiles;
+        }
+
+        if (Object.keys(files).length === 0) throw new Error('No .txt or .csv files found in any language directory');
+
+        activeGithubConfig = {
+            baseUrl: `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/HEAD/vocabulary`,
+            files
+        };
+
+        populateLanguageSelect(activeGithubConfig);
+    } catch (error) {
+        alert(`Failed to fetch repo structure: ${error.message}`);
+    } finally {
+        btn.textContent = originalText;
+        btn.disabled = false;
+    }
+}
+
 // Handle language selection change
 function handleGithubLanguageChange() {
     const select = document.getElementById('githubLanguageSelect');
@@ -963,7 +1043,8 @@ function handleGithubLanguageChange() {
         return;
     }
 
-    const files = GITHUB_CONFIG.files[selectedLanguage] || [];
+    const config = activeGithubConfig || GITHUB_CONFIG;
+    const files = config.files[selectedLanguage] || [];
 
     checkboxesDiv.innerHTML = '';
     files.forEach(file => {
@@ -1020,9 +1101,10 @@ async function loadFromGithub(event) {
         let totalLoaded = 0;
         const errors = [];
 
+        const config = activeGithubConfig || GITHUB_CONFIG;
         for (const checkbox of checkboxes) {
             const fileName = checkbox.value;
-            const url = `${GITHUB_CONFIG.baseUrl}/${selectedLanguage}/${fileName}`;
+            const url = `${config.baseUrl}/${selectedLanguage}/${fileName}`;
             const displayName = fileName.replace('.txt', '').replace(/_/g, ' ');
             const languageName = `${selectedLanguage} - ${displayName}`;
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Language Learning Flashcards</title>
+    <title>The Forgettable Memory App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -345,7 +345,7 @@
     <div class="app-layout">
         <div class="left-panel">
             <div class="container">
-                <h1>Language Flashcards</h1>
+                <h1>The Forgettable Memory App</h1>
 
                 <div id="homeScreen">
                     <div class="file-input-section">
@@ -362,7 +362,12 @@
 
                     <div class="file-input-section">
                         <h3>Load from GitHub Repository</h3>
-                        <p>Select a language to load vocabulary automatically:</p>
+                        <p>Enter a GitHub repo with a <code>vocabulary/</code> folder, or leave blank to use the default:</p>
+                        <div style="display:flex; gap:6px; align-items:center;">
+                            <input type="text" id="customRepoInput" placeholder="owner/repo (default: sterlingalston/language-study)" style="margin:0; flex:1;">
+                            <button onclick="fetchCustomRepo(event)" class="mode-btn" style="margin:0; white-space:nowrap; padding:9px 14px; font-size:0.85em;">Fetch Languages</button>
+                        </div>
+                        <p style="margin-top:10px;">Select a language to load vocabulary:</p>
                         <select id="githubLanguageSelect">
                             <option value="">-- Select Language --</option>
                             <option value="Japanese">Japanese</option>
