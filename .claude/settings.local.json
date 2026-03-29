@@ -8,7 +8,10 @@
       "Bash(python3 << 'EOF'\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'r', encoding='utf-8'\\) as f:\n    lines = f.readlines\\(\\)\n\nnew_lines = []\nfor line in lines:\n    line = line.replace\\('11→', ''\\).replace\\('12→', ''\\).replace\\('13→', ''\\).replace\\('14→', ''\\)\n    line = line.replace\\(r'\\\\!', '!'\\)\n    new_lines.append\\(line\\)\n\nwith open\\('/home/malston/language-study/vocabulary/Japanese/japanese_vocabulary.txt', 'w', encoding='utf-8'\\) as f:\n    f.writelines\\(new_lines\\)\nEOF)",
       "Bash(git push)",
       "Bash(python3 << 'EOF'\nwith open\\('/home/malston/language-study/vocabulary/Spanish/spanish_vocabulary.txt', 'r', encoding='utf-8'\\) as f:\n    content = f.read\\(\\)\n\ncontent = content.replace\\('casual greetingTú', 'casual greeting\\\\nTú'\\)\n\nwith open\\('/home/malston/language-study/vocabulary/Spanish/spanish_vocabulary.txt', 'w', encoding='utf-8'\\) as f:\n    f.write\\(content\\)\nEOF)",
-      "Bash(git add -A && git status)"
+      "Bash(git add -A && git status)",
+      "Bash(git rm --cached test.txt)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

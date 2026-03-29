@@ -10,3 +10,7 @@
 こけ / koke|moss|noun; uses こ+け
 あかい / akai|red|adjective (i-adj); uses あ+か+い
 How many hiragana letters are in the k-row (か き く け こ)?|5|fact
+かお / kao|face (person)|noun
+かう / kau|to buy; to purchase; to value; to stir/provoke|verb (godan -u), transitive
+あき / aki|autumn; fall|noun (temporal)
+えき / eki|station|noun
