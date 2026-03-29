@@ -1,1 +1,3 @@
+很高兴认识你！ / Hěn gāoxìng rènshi nǐ!|Nice to meet you!|greeting
+你叫什么名字？ / Nǐ jiào shénme míngzi?|What's your name?|question
 你呢？ / Nǐ ne?|And you?|question response
