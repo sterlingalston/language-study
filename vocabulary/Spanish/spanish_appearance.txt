@@ -1,0 +1,22 @@
+1	alto / alta|tall|adjective (m/f)
+2	bajo / baja|short|adjective (m/f)
+3	rubio / rubia|blonde|adjective (m/f)
+4	joven|young|adjective (gender-neutral)
+5	mayor|elderly; older|adjective (gender-neutral)
+6	muy|very|adverb
+7	un poco|a little|adverb phrase
+8	Yo soy muy alto.|I am very tall.|masculine
+9	Elena es muy alta.|Elena is very tall.|feminine
+10	Emilia es un poco baja.|Emilia is a little short.|feminine
+11	Yo soy alto.|I'm tall.|masculine adjective example
+12	Yo soy alta.|I'm tall.|feminine adjective example
+13	Tú eres bajo.|You're short.|masculine
+14	Tú eres baja.|You're short.|feminine
+15	Mi padre es rubio.|My father is blonde.|masculine
+16	Marcela es rubia.|Marcela is blonde.|feminine
+17	Eres muy joven.|You're very young.|gender-neutral adjective
+18	Manuel es muy joven.|Manuel is very young.|gender-neutral adjective
+19	Ella es joven.|She's young.|gender-neutral adjective
+20	Mi padre es un hombre mayor.|My father is an elderly man.|gender-neutral adjective
+21	Graciela es mayor.|Graciela is elderly.|gender-neutral adjective
+22	Soy mayor.|I'm older / I'm elderly.|gender-neutral adjective
