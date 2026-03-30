@@ -841,12 +841,11 @@ function loadFromPaste() {
 const GITHUB_CONFIG = {
     baseUrl: 'https://raw.githubusercontent.com/sterlingalston/language-study/refs/heads/master/vocabulary',
     files: {
-        'Japanese': ['japanese_essentials.txt', 'japanese_introductions.txt', 'hiragana_vowels.txt', 'hiragana_ka_ki_ku_ke_ko.txt'],
+        'Japanese': ['japanese_essentials.txt', 'japanese_introductions.txt', 'japanese_occupations.txt', 'hiragana_vowels.txt', 'hiragana_ka_ki_ku_ke_ko.txt'],
         'German': ['german_vocabulary.txt'],
-        'Spanish': ['spanish_vocabulary.txt'],
+        'Spanish': ['spanish_greetings.txt', 'spanish_introductions.txt', 'spanish_location.txt', 'spanish_family.txt', 'spanish_appearance.txt'],
         'Chinese': ['chinese_vocabulary.txt'],
-        'Icelandic': ['icelandic_vocabulary.txt'],
-        'Media Test': ['media_test.txt']
+        'Icelandic': ['icelandic_vocabulary.txt']
     }
 };
 
