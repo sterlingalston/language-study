@@ -1046,6 +1046,39 @@ async function loadFromGithub(event) {
     }
 }
 
+async function fetchDefaultRepo() {
+    const { owner, repo } = { owner: 'sterlingalston', repo: 'language-study' };
+    try {
+        const apiBase = `https://api.github.com/repos/${owner}/${repo}/contents/vocabulary`;
+        const res = await fetch(apiBase);
+        if (!res.ok) return;
+        const items = await res.json();
+        const langDirs = items.filter(item => item.type === 'dir');
+        if (langDirs.length === 0) return;
+
+        const files = {};
+        for (const dir of langDirs) {
+            const dirRes = await fetch(`${apiBase}/${dir.name}`);
+            if (!dirRes.ok) continue;
+            const dirItems = await dirRes.json();
+            const txtFiles = dirItems
+                .filter(f => f.type === 'file' && (f.name.endsWith('.txt') || f.name.endsWith('.csv')))
+                .map(f => f.name);
+            if (txtFiles.length > 0) files[dir.name] = txtFiles;
+        }
+
+        if (Object.keys(files).length === 0) return;
+
+        activeGithubConfig = {
+            baseUrl: `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/vocabulary`,
+            files
+        };
+        populateLanguageSelect(activeGithubConfig);
+    } catch (_) {
+        // silently fall back to GITHUB_CONFIG
+    }
+}
+
 window.onload = function() {
     app.init();
 
@@ -1054,4 +1087,6 @@ window.onload = function() {
     if (githubSelect) {
         githubSelect.addEventListener('change', handleGithubLanguageChange);
     }
+
+    fetchDefaultRepo();
 };
