@@ -1,0 +1,6 @@
+1	¡Hola!|Hello!|general greeting
+2	¡Buenos días!|Good morning!|morning greeting
+3	¿Qué tal?|How's it going?|casual greeting
+4	Bien, gracias.|Fine, thanks.|polite response
+5	Muy bien.|Very well.|positive response
+6	¡Adiós!|Goodbye!|farewell greeting

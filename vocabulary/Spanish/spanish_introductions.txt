@@ -1,0 +1,5 @@
+1	¿Cómo te llamas?|What's your name?|introduction question
+2	Yo soy de España.|I'm from Spain.|origin statement (with explicit subject)
+3	Soy de España.|I'm from Spain.|origin statement
+4	Tú eres de Inglaterra.|You're from England.|origin statement
+5	¿Y tú?|And you?|follow-up question

@@ -1,0 +1,4 @@
+1	hermano|brother|noun
+2	hermana|sister|noun
+3	madre|mother|noun
+4	padre|father|noun
