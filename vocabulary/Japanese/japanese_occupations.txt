@@ -3,3 +3,5 @@
 かいしゃいん / kaishain|company employee|noun
 いしゃ / isha|doctor|noun
 べんごし / bengoshi|lawyer|noun
+だいがくせい / daigakusei|university student|noun
+こうこうせい / koukousei|high school student|noun
