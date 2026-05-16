@@ -1,1 +1,6 @@
 *.png
+!inbox/*.png
+!inbox/*.jpg
+!inbox/*.jpeg
+!inbox/*.gif
+!inbox/*.webp
