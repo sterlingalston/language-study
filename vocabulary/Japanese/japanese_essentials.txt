@@ -15,3 +15,13 @@
 かっこいい / kakkoii|cool; stylish|i-adjective
 そうです。 / Sou desu.|That's right.|affirmation/response
 はい / hai|Yes.|affirmation/response
+どこ / doko|where|question word
+にほん / Nihon|Japan|noun
+アメリカ / Amerika|USA|noun
+イギリス / Igirisu|UK; England|noun
+メキシコ / Mekishiko|Mexico|noun
+ちゅうごく / Chuugoku|China|noun
+はい、そうです。 / Hai, sou desu.|Yes, that's right.|affirmation/response
+にほんはどこですか。 / Nihon wa doko desu ka.|Where is Japan?|question
+きょうとはどこですか。 / Kyouto wa doko desu ka.|Where is Kyoto?|question
+かなざわはどこですか。 / Kanazawa wa doko desu ka.|Where is Kanazawa?|question
