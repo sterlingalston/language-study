@@ -6,3 +6,6 @@
 おなまえは？ / Onamae wa?|What is your name?|question phrase
 ともこさんはだいがくせいですか。 / Tomoko-san wa daigakusei desu ka.|Is Tomoko a university student?|question
 わたしはがくせいじゃないです。 / Watashi wa gakusei janai desu.|I am not a student.|phrase
+はい、かいしゃいんです。 / Hai, kaishain desu.|Yes, I'm a company employee.|phrase
+エマさんはにほんじんじゃないです。 / Emma-san wa nihonjin janai desu.|Emma is not Japanese.|phrase
+フランスじんです。 / Furansujin desu.|She is French.|phrase
