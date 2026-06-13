@@ -4,3 +4,5 @@
 4	Bien, gracias.|Fine, thanks.|polite response
 5	Muy bien.|Very well.|positive response
 6	¡Adiós!|Goodbye!|farewell greeting
+7	Bueno, adiós.|Well, goodbye.|farewell greeting
+8	Hasta pronto.|See you soon.|farewell greeting

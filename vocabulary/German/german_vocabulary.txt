@@ -11,3 +11,33 @@ Tschüss!|Bye!|informal farewell
 Wie geht's?|How's it going?|casual greeting question
 Wie geht's dir?|How is it going?|more formal greeting question
 Wie heißt du?|What's your name?|introduction question
+Woher kommst du?|Where are you from?|question
+Woher|where from|question word
+Ich komme aus Deutschland.|I'm from Germany.|phrase
+Deutschland|Germany|noun
+Ich komme aus der Türkei.|I come from Türkiye.|phrase
+Türkei|Türkiye|noun
+Ich komme aus den USA.|I come from the USA.|phrase
+USA|USA|noun
+Wo wohnst du?|Where do you live?|question
+Ich wohne in Spanien.|I live in Spain.|phrase
+Spanien|Spain|noun
+Ich wohne in England.|I live in England.|phrase
+England|England|noun
+Ich wohne in Brasilien.|I live in Brazil.|phrase
+Brasilien|Brazil|noun
+der Bahnhof|the train station|noun
+die Straße|the street|noun
+Wo ist die Hauptstraße?|Where is the high street?|question
+die Hauptstraße|the high street|noun
+das Museum|the museum|noun
+das Café|the café|noun
+die Lehrerin|the teacher (female)|noun
+fröhlich|happy|adjective
+der Junge|the boy|noun
+klein|small|adjective
+der Hauptbahnhof|the main station|noun
+Wo ist der Hauptbahnhof?|Where is the main station?|question
+links|on the left|adverb
+rechts|right|adverb
+geradeaus|straight ahead|adverb

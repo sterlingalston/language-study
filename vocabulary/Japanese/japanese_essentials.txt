@@ -13,3 +13,5 @@
 ひと / hito|person|noun
 みず / mizu|water|noun
 かっこいい / kakkoii|cool; stylish|i-adjective
+そうです。 / Sou desu.|That's right.|affirmation/response
+はい / hai|Yes.|affirmation/response

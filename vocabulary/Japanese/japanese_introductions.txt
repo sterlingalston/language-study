@@ -4,3 +4,5 @@
 わたしはまりこです。 / Watashi wa Mariko desu.|I am Mariko.|self-introduction
 あなた / anata|you (polite)|pronoun
 おなまえは？ / Onamae wa?|What is your name?|question phrase
+ともこさんはだいがくせいですか。 / Tomoko-san wa daigakusei desu ka.|Is Tomoko a university student?|question
+わたしはがくせいじゃないです。 / Watashi wa gakusei janai desu.|I am not a student.|phrase

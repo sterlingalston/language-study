@@ -1,0 +1,14 @@
+1	dinero|money|noun
+2	tomate|tomato|noun
+3	autobús|bus|noun
+4	mesa|table|noun
+5	¿Un jugo de naranja?|An orange juice?|question
+6	Mi madre tiene un perro muy grande.|My mother has a very big dog.|phrase
+7	perro|dog|noun
+8	Yo quiero pagar la cuenta.|I want to pay the check.|phrase
+9	cuenta|check; bill|noun
+10	Me gusta la manzana también.|I like the apple too.|phrase
+11	¿Te gusta el jugo?|Do you like the juice?|question
+12	No me gusta.|I don't like (it).|phrase
+13	Ah, no te gusta el jugo.|Ah, you don't like the juice.|phrase
+14	Ella tiene un perro.|She has a dog.|phrase

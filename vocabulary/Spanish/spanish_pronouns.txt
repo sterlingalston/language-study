@@ -1,0 +1,6 @@
+1	yo|I|subject pronoun
+2	tú|you (informal)|subject pronoun
+3	él / ella / usted|he / she / you (formal)|subject pronoun
+4	nosotros / nosotras|we|subject pronoun
+5	vosotros / vosotras|you all (Spain, informal)|subject pronoun
+6	ellos / ellas / ustedes|they / you all (formal)|subject pronoun

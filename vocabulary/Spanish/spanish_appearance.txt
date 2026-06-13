@@ -20,3 +20,16 @@
 20	Mi padre es un hombre mayor.|My father is an elderly man.|gender-neutral adjective
 21	Graciela es mayor.|Graciela is elderly.|gender-neutral adjective
 22	Soy mayor.|I'm older / I'm elderly.|gender-neutral adjective
+23	Mi esposo es inteligente.|My husband is intelligent.|gender-neutral adjective
+24	inteligente|intelligent|adjective (gender-neutral)
+25	Tengo los ojos negros.|I have black eyes.|phrase
+26	Tengo el pelo rubio.|I have blonde hair.|phrase
+27	pelo|hair|noun
+28	Tengo los ojos azules.|I have blue eyes.|phrase
+29	ojos|eyes|noun
+30	moreno / morena|dark-haired|adjective (m/f)
+31	Ella es morena.|She is dark-haired.|phrase
+32	Soy morena.|I am dark-haired.|phrase
+33	Tengo el pelo negro.|I have black hair.|phrase
+34	Él es rubio.|He is blonde.|phrase
+35	Él tiene el pelo rubio.|He has blonde hair.|phrase
