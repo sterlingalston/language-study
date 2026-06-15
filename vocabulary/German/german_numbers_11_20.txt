@@ -1,0 +1,10 @@
+elf|eleven|number
+zwölf|twelve|number
+dreizehn|thirteen|number
+vierzehn|fourteen|number
+fünfzehn|fifteen|number
+sechzehn|sixteen|number
+siebzehn|seventeen|number
+achtzehn|eighteen|number
+neunzehn|nineteen|number
+zwanzig|twenty|number

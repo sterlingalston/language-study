@@ -1,0 +1,16 @@
+1	treinta|thirty|number
+2	treinta y uno|thirty-one|number
+3	cuarenta|forty|number
+4	cincuenta|fifty|number
+5	sesenta|sixty|number
+6	setenta|seventy|number
+7	ochenta|eighty|number
+8	noventa|ninety|number
+9	cien|one hundred|number
+10	ciento uno|one hundred and one|number
+11	doscientos|two hundred|number
+12	trescientos|three hundred|number
+13	quinientos|five hundred|number
+14	novecientos|nine hundred|number
+15	mil|one thousand|number
+16	dos mil|two thousand|number

@@ -1,0 +1,10 @@
+Ellefu / Ellefu|Eleven|number
+Tólf / Tólf|Twelve|number
+Þrettán / Þrettán|Thirteen|number
+Fjórtán / Fjórtán|Fourteen|number
+Fimmtán / Fimmtán|Fifteen|number
+Sextán / Sextán|Sixteen|number
+Sautján / Sautján|Seventeen|number
+Átján / Átján|Eighteen|number
+Nítján / Nítján|Nineteen|number
+Tuttugu / Tuttugu|Twenty|number

@@ -1,0 +1,12 @@
+ゼロ / zero|zero|number
+れい / rei|zero|number
+いち / ichi|one|number
+に / ni|two|number
+さん / san|three|number
+よん / yon|four|number
+ご / go|five|number
+ろく / roku|six|number
+なな / nana|seven|number
+はち / hachi|eight|number
+きゅう / kyuu|nine|number
+じゅう / juu|ten|number

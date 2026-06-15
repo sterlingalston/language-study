@@ -1,0 +1,4 @@
+hundert|one hundred|number
+zweihundert|two hundred|number
+fünfhundert|five hundred|number
+tausend|one thousand|number

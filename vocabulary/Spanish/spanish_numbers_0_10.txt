@@ -1,0 +1,11 @@
+1	cero|zero|number
+2	uno|one|number
+3	dos|two|number
+4	tres|three|number
+5	cuatro|four|number
+6	cinco|five|number
+7	seis|six|number
+8	siete|seven|number
+9	ocho|eight|number
+10	nueve|nine|number
+11	diez|ten|number

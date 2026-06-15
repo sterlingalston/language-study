@@ -1,0 +1,11 @@
+null|zero|number
+eins|one|number
+zwei|two|number
+drei|three|number
+vier|four|number
+fünf|five|number
+sechs|six|number
+sieben|seven|number
+acht|eight|number
+neun|nine|number
+zehn|ten|number

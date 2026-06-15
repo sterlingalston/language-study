@@ -1,0 +1,10 @@
+Tuttugu / Tuttugu|Twenty|number
+Þrjátíu / Þrjátíu|Thirty|number
+Fjörutíu / Fjörutíu|Forty|number
+Fimmtíu / Fimmtíu|Fifty|number
+Sextíu / Sextíu|Sixty|number
+Sjötíu / Sjötíu|Seventy|number
+Áttatíu / Áttatíu|Eighty|number
+Níutíu / Níutíu|Ninety|number
+Hundrað / Hundrað|One hundred|number
+Þúsund / Þúsund|One thousand|number

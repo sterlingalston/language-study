@@ -1,0 +1,11 @@
+Núll / Núll|Zero|number
+Einn / Einn|One|number
+Tveir / Tveir|Two|number
+Þrír / Þrír|Three|number
+Fjórir / Fjórir|Four|number
+Fimm / Fimm|Five|number
+Sex / Sex|Six|number
+Sjö / Sjö|Seven|number
+Átta / Átta|Eight|number
+Níu / Níu|Nine|number
+Tíu / Tíu|Ten|number

@@ -1,0 +1,19 @@
+じゅういち / juuichi|eleven|number
+じゅうに / juuni|twelve|number
+じゅうさん / juusan|thirteen|number
+じゅうよん / juuyon|fourteen|number
+じゅうご / juugo|fifteen|number
+じゅうろく / juuroku|sixteen|number
+じゅうなな / juunana|seventeen|number
+じゅうはち / juuhachi|eighteen|number
+じゅうきゅう / juukyuu|nineteen|number
+にじゅう / nijuu|twenty|number
+にじゅういち / nijuuichi|twenty-one|number
+さんじゅう / sanjuu|thirty|number
+よんじゅう / yonjuu|forty|number
+ごじゅう / gojuu|fifty|number
+ろくじゅう / rokujuu|sixty|number
+ななじゅう / nanajuu|seventy|number
+はちじゅう / hachijuu|eighty|number
+きゅうじゅう / kyuujuu|ninety|number
+ひゃく / hyaku|one hundred|number

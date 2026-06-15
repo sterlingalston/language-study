@@ -1,0 +1,11 @@
+零 / líng|zero|number
+一 / yī|one|number
+二 / èr|two|number
+三 / sān|three|number
+四 / sì|four|number
+五 / wǔ|five|number
+六 / liù|six|number
+七 / qī|seven|number
+八 / bā|eight|number
+九 / jiǔ|nine|number
+十 / shí|ten|number

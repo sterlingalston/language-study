@@ -1,0 +1,19 @@
+十一 / shíyī|eleven|number
+十二 / shí'èr|twelve|number
+十三 / shísān|thirteen|number
+十四 / shísì|fourteen|number
+十五 / shíwǔ|fifteen|number
+十六 / shíliù|sixteen|number
+十七 / shíqī|seventeen|number
+十八 / shíbā|eighteen|number
+十九 / shíjiǔ|nineteen|number
+二十 / èrshí|twenty|number
+二十一 / èrshíyī|twenty-one|number
+三十 / sānshí|thirty|number
+四十 / sìshí|forty|number
+五十 / wǔshí|fifty|number
+六十 / liùshí|sixty|number
+七十 / qīshí|seventy|number
+八十 / bāshí|eighty|number
+九十 / jiǔshí|ninety|number
+一百 / yìbǎi|one hundred|number

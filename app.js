@@ -841,11 +841,11 @@ function loadFromPaste() {
 const GITHUB_CONFIG = {
     baseUrl: 'https://raw.githubusercontent.com/sterlingalston/language-study/refs/heads/master/vocabulary',
     files: {
-        'Japanese': ['japanese_essentials.txt', 'japanese_introductions.txt', 'japanese_occupations.txt', 'hiragana_vowels.txt', 'hiragana_ka_ki_ku_ke_ko.txt'],
-        'German': ['german_vocabulary.txt'],
-        'Spanish': ['spanish_greetings.txt', 'spanish_introductions.txt', 'spanish_location.txt', 'spanish_family.txt', 'spanish_appearance.txt'],
-        'Chinese': ['chinese_vocabulary.txt'],
-        'Icelandic': ['icelandic_vocabulary.txt']
+        'Japanese': ['japanese_essentials.txt', 'japanese_introductions.txt', 'japanese_occupations.txt', 'hiragana_vowels.txt', 'hiragana_ka_ki_ku_ke_ko.txt', 'japanese_numbers_0_10.txt', 'japanese_numbers_11_100.txt', 'japanese_numbers_100_10000.txt'],
+        'German': ['german_vocabulary.txt', 'german_numbers_0_10.txt', 'german_numbers_11_20.txt', 'german_numbers_20_100.txt', 'german_numbers_100_1000.txt'],
+        'Spanish': ['spanish_greetings.txt', 'spanish_introductions.txt', 'spanish_location.txt', 'spanish_family.txt', 'spanish_appearance.txt', 'spanish_pronouns.txt', 'spanish_vocabulary.txt', 'spanish_numbers_0_10.txt', 'spanish_numbers_11_30.txt', 'spanish_numbers_30_1000.txt'],
+        'Chinese': ['chinese_vocabulary.txt', 'chinese_numbers_0_10.txt', 'chinese_numbers_11_100.txt', 'chinese_numbers_100_10000.txt'],
+        'Icelandic': ['icelandic_vocabulary.txt', 'icelandic_numbers_0_10.txt', 'icelandic_numbers_11_20.txt', 'icelandic_numbers_20_1000.txt']
     }
 };
 

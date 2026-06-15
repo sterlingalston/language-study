@@ -1,0 +1,10 @@
+zwanzig|twenty|number
+einundzwanzig|twenty-one|number
+dreißig|thirty|number
+vierzig|forty|number
+fünfzig|fifty|number
+sechzig|sixty|number
+siebzig|seventy|number
+achtzig|eighty|number
+neunzig|ninety|number
+hundert|one hundred|number
