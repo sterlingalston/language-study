@@ -25,3 +25,6 @@
 にほんはどこですか。 / Nihon wa doko desu ka.|Where is Japan?|question
 きょうとはどこですか。 / Kyouto wa doko desu ka.|Where is Kyoto?|question
 かなざわはどこですか。 / Kanazawa wa doko desu ka.|Where is Kanazawa?|question
+えいが / eiga|movie|noun
+せかい / sekai|world|noun
+おかし / okashi|snacks|noun
