@@ -28,3 +28,13 @@
 えいが / eiga|movie|noun
 せかい / sekai|world|noun
 おかし / okashi|snacks|noun
+すし / sushi|sushi|noun
+かさ / kasa|umbrella|noun
+しか / shika|deer|noun
+おさけ / osake|alcohol; Japanese rice wine|noun
+すき / suki|fond of; to like|na-adjective
+くさい / kusai|smelly|i-adjective
+すこし / sukoshi|a little; a bit|adverb
+さかい / sakai|border|noun
+あそこ / asoko|over there|pronoun
+おおさか / Oosaka|Osaka|proper noun

@@ -9,3 +9,8 @@
 はい、かいしゃいんです。 / Hai, kaishain desu.|Yes, I'm a company employee.|phrase
 エマさんはにほんじんじゃないです。 / Emma-san wa nihonjin janai desu.|Emma is not Japanese.|phrase
 フランスじんです。 / Furansujin desu.|She is French.|phrase
+なまえ / namae|name|noun
+わたしのともだち / watashi no tomodachi|my friend|phrase
+わたしの / watashi no|my (formal; masculine and feminine)|pronoun
+ぼくの / boku no|my (semi-formal and casual; mildly masculine)|pronoun
+おれの / ore no|my (casual; strongly masculine)|pronoun
