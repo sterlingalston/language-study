@@ -1,0 +1,8 @@
+{
+  "name": "Language Vocabulary Sync",
+  "description": "Auto-syncs vocabulary flashcards from the sterlingalston/language-study GitHub repo into RemNote.",
+  "id": "language-vocab-sync",
+  "shouldRunRemotelyByDefault": false,
+  "mobileAppEnabled": false,
+  "replyAsBotEnabled": false
+}
