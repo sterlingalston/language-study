@@ -1,8 +1,22 @@
 {
-  "name": "Language Vocabulary Sync",
-  "description": "Auto-syncs vocabulary flashcards from the sterlingalston/language-study GitHub repo into RemNote.",
+  "manifestVersion": 1,
   "id": "language-vocab-sync",
-  "shouldRunRemotelyByDefault": false,
-  "mobileAppEnabled": false,
-  "replyAsBotEnabled": false
+  "name": "Language Vocabulary Sync",
+  "author": "Matt Alston",
+  "repoUrl": "https://github.com/sterlingalston/language-study",
+  "version": {
+    "major": 1,
+    "minor": 0,
+    "patch": 3
+  },
+  "theme": [],
+  "enableOnMobile": false,
+  "description": "Auto-syncs vocabulary flashcards from the sterlingalston/language-study GitHub repo into RemNote.",
+  "requestNative": false,
+  "requiredScopes": [
+    {
+      "type": "All",
+      "level": "ReadCreateModifyDelete"
+    }
+  ]
 }
