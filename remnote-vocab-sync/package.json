@@ -7,7 +7,7 @@
     "build": "webpack --mode production"
   },
   "dependencies": {
-    "@remnote/plugin-sdk": "^1.4.0",
+    "@remnote/plugin-sdk": "^0.0.46",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

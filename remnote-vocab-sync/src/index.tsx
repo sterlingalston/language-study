@@ -1,12 +1,17 @@
-import { declareIndexPlugin, ReactRNPlugin, WidgetLocation } from '@remnote/plugin-sdk';
+import {
+  declareIndexPlugin,
+  ReactRNPlugin,
+  RichTextInterface,
+  PluginRem as RemObject,
+} from '@remnote/plugin-sdk';
 
 const GITHUB_BASE =
   'https://raw.githubusercontent.com/sterlingalston/language-study/refs/heads/master/vocabulary';
 
-const SYNC_INTERVAL_MS = 24 * 60 * 60 * 1000; // once per day
+const SYNC_INTERVAL_MS = 24 * 60 * 60 * 1000;
 const ROOT_REM_NAME = 'Language Study';
-const SETTING_LAST_SYNC = 'lastSyncTimestamp';
-const SETTING_FILE_HASHES = 'fileHashes';
+const KEY_LAST_SYNC = 'lastSync';
+const KEY_HASHES = 'fileHashes';
 
 interface UnitConfig {
   filename: string;
@@ -77,12 +82,20 @@ const LANGUAGES: Record<string, LangConfig> = {
   },
 };
 
-// Strip leading `N\t` line numbers used by Spanish files
+// Extract plain string from RemNote's RichText format
+function richTextToString(rt: RichTextInterface | undefined): string {
+  if (!rt) return '';
+  return rt
+    .map((el) => (typeof el === 'string' ? el : 'text' in el ? (el as any).text ?? '' : ''))
+    .join('');
+}
+
+// Strip leading `N\t` line numbers (used by Spanish files)
 function stripLineNumber(line: string): string {
   return line.replace(/^\d+\t/, '');
 }
 
-// Parse `front|back|type` or `N\tfront|back|type` into a flashcard string
+// Parse pipe-delimited entry into a RemNote flashcard string `front >> back (type)`
 function parseLine(raw: string): string | null {
   const line = stripLineNumber(raw.trim());
   if (!line) return null;
@@ -95,14 +108,6 @@ function parseLine(raw: string): string | null {
   return type ? `${front} >> ${back} (${type})` : `${front} >> ${back}`;
 }
 
-// Build the tab-indented markdown for one unit (unit name + its flashcards as children)
-function buildUnitMarkdown(unitName: string, lines: string[]): string {
-  const cards = lines.map(parseLine).filter((l): l is string => l !== null);
-  if (cards.length === 0) return '';
-  return [unitName, ...cards.map((c) => `\t${c}`)].join('\n');
-}
-
-// Simple hash for change detection — just a content length + checksum
 function simpleHash(text: string): string {
   let h = 0;
   for (let i = 0; i < text.length; i++) {
@@ -114,69 +119,63 @@ function simpleHash(text: string): string {
 async function fetchText(url: string): Promise<string | null> {
   try {
     const res = await fetch(url);
-    if (!res.ok) return null;
-    return await res.text();
+    return res.ok ? await res.text() : null;
   } catch {
     return null;
   }
 }
 
-async function findOrCreateChildByName(
+// Find a direct child rem by its plain-text name, or create one
+async function findOrCreateChild(
   plugin: ReactRNPlugin,
   name: string,
   parentId: string
-): Promise<string | null> {
+): Promise<RemObject | undefined> {
   const parent = await plugin.rem.findOne(parentId);
-  if (!parent) return null;
+  if (!parent) return undefined;
 
   const children = await parent.getChildrenRem();
-  for (const child of children ?? []) {
-    const text = await child.text;
-    if (Array.isArray(text) && text[0]?.text === name) return child._id;
-    if (typeof text === 'string' && text === name) return child._id;
+  for (const child of children) {
+    if (richTextToString(child.text) === name) return child;
   }
 
   const newRem = await plugin.rem.createRem();
-  if (!newRem) return null;
-  await newRem.setText([{ i: 'q', text: name }] as any);
+  if (!newRem) return undefined;
+  await newRem.setText([{ i: 'm', text: name }]);
   await newRem.setParent(parentId);
-  return newRem._id;
+  return newRem;
 }
 
 async function syncVocabulary(plugin: ReactRNPlugin): Promise<void> {
   await plugin.app.toast('Language Vocab Sync: starting…');
 
-  const storedHashes: Record<string, string> =
-    ((await plugin.settings.getSetting(SETTING_FILE_HASHES)) as Record<string, string>) ?? {};
+  const storedHashes = (await plugin.storage.getLocal<Record<string, string>>(KEY_HASHES)) ?? {};
   const updatedHashes: Record<string, string> = { ...storedHashes };
 
-  // Find or create root "Language Study" Rem
-  let rootRemId: string | null = null;
+  // Find or create the root "Language Study" Rem (top-level document)
+  let rootRem: RemObject | undefined;
   const allRem = await plugin.rem.getAll();
   for (const r of allRem) {
-    const t = await r.text;
-    const text = Array.isArray(t) ? t[0]?.text : t;
-    if (text === ROOT_REM_NAME && !(await r.getParentRem())) {
-      rootRemId = r._id;
+    if (richTextToString(r.text) === ROOT_REM_NAME && !(await r.getParentRem())) {
+      rootRem = r;
       break;
     }
   }
-  if (!rootRemId) {
-    const root = await plugin.rem.createRem();
-    if (!root) {
+  if (!rootRem) {
+    rootRem = await plugin.rem.createRem();
+    if (!rootRem) {
       await plugin.app.toast('Language Vocab Sync: failed to create root Rem.');
       return;
     }
-    await root.setText([{ i: 'q', text: ROOT_REM_NAME }] as any);
-    rootRemId = root._id;
+    await rootRem.setText([{ i: 'm', text: ROOT_REM_NAME }]);
   }
 
-  let newUnits = 0;
-  let updatedUnits = 0;
+  let newCount = 0;
+  let updatedCount = 0;
 
   for (const [langKey, langConfig] of Object.entries(LANGUAGES)) {
-    const langRemId = await findOrCreateChildByName(plugin, langConfig.display, rootRemId);
-    if (!langRemId) continue;
+    const langRem = await findOrCreateChild(plugin, langConfig.display, rootRem._id);
+    if (!langRem) continue;
 
     for (const unit of langConfig.units) {
       const url = `${GITHUB_BASE}/${langKey}/${unit.filename}`;
@@ -188,62 +187,47 @@ async function syncVocabulary(plugin: ReactRNPlugin): Promise<void> {
       const isNew = !storedHashes[cacheKey];
       const isChanged = storedHashes[cacheKey] !== hash;
 
-      if (!isNew && !isChanged) continue; // already up to date
+      if (!isNew && !isChanged) continue;
 
-      const lines = content.split('\n');
-      const markdown = buildUnitMarkdown(unit.display, lines);
-      if (!markdown) continue;
+      const flashcards = content
+        .split('\n')
+        .map(parseLine)
+        .filter((l): l is string => l !== null)
+        .join('\n');
+
+      if (!flashcards) continue;
 
       if (isNew) {
-        // Create new unit rem + flashcards via markdown
-        const unitRem = await plugin.rem.createRem();
-        if (!unitRem) continue;
-        await unitRem.setText([{ i: 'q', text: unit.display }] as any);
-        await unitRem.setParent(langRemId);
-        await plugin.rem.createTreeWithMarkdown(
-          lines
-            .map(parseLine)
-            .filter((l): l is string => l !== null)
-            .join('\n'),
-          unitRem._id
-        );
-        newUnits++;
+        // Create unit rem + flashcards in one tree call:
+        //   "<unit name>\n\t<card1>\n\t<card2>..."
+        const unitMarkdown = `${unit.display}\n${flashcards.split('\n').map((c) => `\t${c}`).join('\n')}`;
+        await plugin.rem.createTreeWithMarkdown(unitMarkdown, langRem._id);
+        newCount++;
       } else {
-        // Changed: replace children of existing unit rem
-        const unitRemId = await findOrCreateChildByName(plugin, unit.display, langRemId);
-        if (!unitRemId) continue;
-        const unitRem = await plugin.rem.findOne(unitRemId);
+        // Replace flashcards under the existing unit rem
+        const unitRem = await findOrCreateChild(plugin, unit.display, langRem._id);
         if (!unitRem) continue;
-        // Remove old children
-        const oldChildren = (await unitRem.getChildrenRem()) ?? [];
+        const oldChildren = await unitRem.getChildrenRem();
         for (const child of oldChildren) await child.remove();
-        // Re-add from updated file
-        await plugin.rem.createTreeWithMarkdown(
-          lines
-            .map(parseLine)
-            .filter((l): l is string => l !== null)
-            .join('\n'),
-          unitRemId
-        );
-        updatedUnits++;
+        await plugin.rem.createTreeWithMarkdown(flashcards, unitRem._id);
+        updatedCount++;
       }
 
       updatedHashes[cacheKey] = hash;
     }
   }
 
-  await plugin.settings.setSetting(SETTING_FILE_HASHES, updatedHashes);
-  await plugin.settings.setSetting(SETTING_LAST_SYNC, Date.now().toString());
+  await plugin.storage.setLocal(KEY_HASHES, updatedHashes);
+  await plugin.storage.setLocal(KEY_LAST_SYNC, Date.now().toString());
 
   const msg =
-    newUnits + updatedUnits === 0
+    newCount + updatedCount === 0
       ? 'Language Vocab Sync: already up to date.'
-      : `Language Vocab Sync: added ${newUnits} new unit(s), updated ${updatedUnits} unit(s).`;
+      : `Language Vocab Sync: +${newCount} new unit(s), ~${updatedCount} updated.`;
   await plugin.app.toast(msg);
 }
 
 async function onActivate(plugin: ReactRNPlugin): Promise<void> {
-  // Manual sync command accessible from RemNote's command palette (Ctrl+P)
   await plugin.app.registerCommand({
     id: 'sync-language-vocab',
     name: 'Sync Language Vocabulary from GitHub',
@@ -252,10 +236,9 @@ async function onActivate(plugin: ReactRNPlugin): Promise<void> {
   });
 
   // Auto-sync once per day on load
-  const lastSync = (await plugin.settings.getSetting(SETTING_LAST_SYNC)) as string | undefined;
+  const lastSync = await plugin.storage.getLocal<string>(KEY_LAST_SYNC);
   const elapsed = lastSync ? Date.now() - Number(lastSync) : Infinity;
   if (elapsed > SYNC_INTERVAL_MS) {
-    // Defer slightly so RemNote finishes loading first
     setTimeout(() => syncVocabulary(plugin), 3000);
   }
 }
