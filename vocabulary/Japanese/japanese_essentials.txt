@@ -37,4 +37,6 @@
 すこし / sukoshi|a little; a bit|adverb
 さかい / sakai|border|noun
 あそこ / asoko|over there|pronoun
+あさ / asa|morning|noun
+すいえい / suiei|swimming|noun
 おおさか / Oosaka|Osaka|proper noun
