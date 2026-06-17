@@ -35,6 +35,7 @@ const LANGUAGES: Record<string, LangConfig> = {
       { filename: 'japanese_occupations.txt', display: 'Occupations' },
       { filename: 'hiragana_vowels.txt', display: 'Hiragana — Vowels' },
       { filename: 'hiragana_ka_ki_ku_ke_ko.txt', display: 'Hiragana — ka ki ku ke ko' },
+      { filename: 'hiragana_sa_si_su_se_so.txt', display: 'Hiragana — sa shi su se so' },
       { filename: 'japanese_numbers_0_10.txt', display: 'Numbers 0–10' },
       { filename: 'japanese_numbers_11_100.txt', display: 'Numbers 11–100' },
       { filename: 'japanese_numbers_100_10000.txt', display: 'Numbers 100–10,000' },
@@ -225,13 +226,15 @@ async function syncVocabulary(plugin: ReactRNPlugin): Promise<void> {
         await unitRem.setParent(langRem._id);
         updatedUnitIds[cacheKey] = unitRem._id;
 
-        // Create flashcards: front text + back text on a single rem
+        // Create flashcards: front text + back text, tagged by language and unit
         for (const card of cards) {
           const cardRem = await plugin.rem.createRem();
           if (!cardRem) continue;
           await cardRem.setText(await makeText(card.front));
           await cardRem.setBackText(await makeText(card.back));
           await cardRem.setParent(unitRem._id);
+          await cardRem.addTag(langRem._id);
+          await cardRem.addTag(unitRem._id);
           newCards++;
         }
 
