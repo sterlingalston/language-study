@@ -14,3 +14,11 @@
 わたしの / watashi no|my (formal; masculine and feminine)|pronoun
 ぼくの / boku no|my (semi-formal and casual; mildly masculine)|pronoun
 おれの / ore no|my (casual; strongly masculine)|pronoun
+にほんじん / Nihonjin|Japanese person|noun
+ちゅうごくじん / Chuugokujin|Chinese person|noun
+アメリカじん / Amerikajin|American person|noun
+イギリスじん / Igirisujin|English person; British person|noun
+メキシコじん / Mekishikojin|Mexican person|noun
+ドイツじん / Doitsujin|German person|noun
+ブラジルじん / Burajirujin|Brazilian person|noun
+フランスじん / Furansujin|French person|noun

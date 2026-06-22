@@ -40,3 +40,6 @@
 あさ / asa|morning|noun
 すいえい / suiei|swimming|noun
 おおさか / Oosaka|Osaka|proper noun
+ドイツ / Doitsu|Germany|noun
+ブラジル / Burajiru|Brazil|noun
+フランス / Furansu|France|noun
