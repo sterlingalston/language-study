@@ -1,0 +1,13 @@
+mi / mis|my (possessive adjective, singular/plural)|possessive adjective
+tu / tus|your (informal, singular/plural)|possessive adjective
+su / sus|his / her / your (formal) / their (singular/plural)|possessive adjective
+nuestro / nuestra / nuestros / nuestras|our (m/f, singular/plural)|possessive adjective
+vuestro / vuestra / vuestros / vuestras|your (plural, Spain, m/f singular/plural)|possessive adjective
+el mío / la mía|mine|possessive pronoun
+el tuyo / la tuya|yours (informal)|possessive pronoun
+el suyo / la suya|his / hers / yours (formal) / theirs|possessive pronoun
+el nuestro / la nuestra|ours|possessive pronoun
+el vuestro / la vuestra|yours (plural, Spain)|possessive pronoun
+Mi abuela tiene el pelo gris.|My grandmother has grey hair.|phrase
+Tus llaves son pequeñas.|Your keys are small.|phrase
+Nuestro nieto vive en España.|Our grandson lives in Spain.|phrase

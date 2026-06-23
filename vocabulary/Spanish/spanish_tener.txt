@@ -1,0 +1,12 @@
+tener|to have|verb (irregular)
+tengo|I have (yo form of tener)|verb conjugation
+tienes|you have (tú form of tener)|verb conjugation
+tiene|he/she/you (formal) has/have (él/ella/usted form of tener)|verb conjugation
+el coche|car|noun
+el hijo / los hijos|son / children|noun
+los hermanos|brothers and sisters; siblings|noun
+Yo no tengo dinero.|I don't have any money.|phrase
+¿Tienes hermanos?|Do you have any brothers and sisters?|phrase
+¿Usted tiene hijos?|Do you have any children? (formal)|phrase
+Juan tiene un coche nuevo.|Juan has a new car.|phrase
+Tengo los ojos marrones.|I have brown eyes.|phrase

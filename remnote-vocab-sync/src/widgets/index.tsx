@@ -51,6 +51,8 @@ const LANGUAGES: Record<string, LangConfig> = {
       { filename: 'spanish_family.txt', display: 'Family' },
       { filename: 'spanish_appearance.txt', display: 'Appearance' },
       { filename: 'spanish_vocabulary.txt', display: 'Everyday Vocabulary' },
+      { filename: 'spanish_tener.txt', display: 'Verb — tener (to have)' },
+      { filename: 'spanish_possessives.txt', display: 'Possessives' },
       { filename: 'spanish_numbers_0_10.txt', display: 'Numbers 0–10' },
       { filename: 'spanish_numbers_11_30.txt', display: 'Numbers 11–30' },
       { filename: 'spanish_numbers_30_1000.txt', display: 'Numbers 30–1,000' },
