@@ -36,6 +36,8 @@ const LANGUAGES: Record<string, LangConfig> = {
       { filename: 'hiragana_vowels.txt', display: 'Hiragana — Vowels' },
       { filename: 'hiragana_ka_ki_ku_ke_ko.txt', display: 'Hiragana — ka ki ku ke ko' },
       { filename: 'hiragana_sa_si_su_se_so.txt', display: 'Hiragana — sa shi su se so' },
+      { filename: 'hiragana_ta_chi_tsu_te_to.txt', display: 'Hiragana — ta chi tsu te to' },
+      { filename: 'katakana_vowels.txt', display: 'Katakana — Vowels' },
       { filename: 'japanese_numbers_0_10.txt', display: 'Numbers 0–10' },
       { filename: 'japanese_numbers_11_100.txt', display: 'Numbers 11–100' },
       { filename: 'japanese_numbers_100_10000.txt', display: 'Numbers 100–10,000' },

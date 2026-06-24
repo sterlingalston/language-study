@@ -1,0 +1,9 @@
+ア|a (katakana)|katakana vowel; like hiragana あ but more angular
+イ|i (katakana)|katakana vowel; looks like two strokes — like the letter I
+ウ|u (katakana)|katakana vowel; like hiragana う but simplified
+エ|e (katakana)|katakana vowel; looks like the letter H
+オ|o (katakana)|katakana vowel; like a plus sign with a hook
+イオ / io|Io (moon of Jupiter)|noun; katakana loanword using イ+オ
+エーアイ / e-a-i|AI; Artificial Intelligence|noun; katakana loanword using エ+ア+イ; ー extends the vowel
+What is katakana primarily used for?|Foreign loanwords, foreign names, and emphasis|fact
+How does ー work in katakana?|It extends the preceding vowel sound (e.g. エー = "ee")|fact
