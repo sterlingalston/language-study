@@ -1,0 +1,24 @@
+大きい / おおきい|big; large|adjective (i-adj)
+小さい / ちいさい|small; little; tiny|adjective (i-adj)
+高い / たかい|tall; high; expensive|adjective (i-adj)
+低い / ひくい|short (height); low|adjective (i-adj)
+長い / ながい|long|adjective (i-adj)
+短い / みじかい|short (length)|adjective (i-adj)
+速い / はやい|fast; quick|adjective (i-adj)
+遅い / おそい|slow; late|adjective (i-adj)
+新しい / あたらしい|new|adjective (i-adj)
+古い / ふるい|old (things, not people)|adjective (i-adj)
+若い / わかい|young|adjective (i-adj)
+良い / いい|good|adjective (i-adj); いい is more common in speech
+悪い / わるい|bad|adjective (i-adj)
+暑い / あつい|hot (weather)|adjective (i-adj)
+寒い / さむい|cold (weather)|adjective (i-adj)
+熱い / あつい|hot (to touch)|adjective (i-adj); same sound as 暑い but different kanji
+冷たい / つめたい|cold (to touch)|adjective (i-adj)
+楽しい / たのしい|fun; enjoyable|adjective (i-adj)
+難しい / むずかしい|difficult|adjective (i-adj)
+易しい / やさしい|easy; gentle; kind|adjective (i-adj)
+重い / おもい|heavy|adjective (i-adj)
+軽い / かるい|light (weight)|adjective (i-adj)
+What is the difference between 暑い and 熱い?|Both are "atsui" but 暑い is hot weather; 熱い is hot to touch|fact
+What is the difference between 高い and 低い?|高い = tall/high/expensive; 低い = short/low|fact

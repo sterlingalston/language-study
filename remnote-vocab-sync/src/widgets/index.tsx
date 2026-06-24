@@ -33,6 +33,7 @@ const LANGUAGES: Record<string, LangConfig> = {
       { filename: 'japanese_essentials.txt', display: 'Essentials' },
       { filename: 'japanese_introductions.txt', display: 'Introductions' },
       { filename: 'japanese_occupations.txt', display: 'Occupations' },
+      { filename: 'japanese_adjectives.txt', display: 'Adjectives' },
       { filename: 'hiragana_vowels.txt', display: 'Hiragana — Vowels' },
       { filename: 'hiragana_ka_ki_ku_ke_ko.txt', display: 'Hiragana — ka ki ku ke ko' },
       { filename: 'hiragana_sa_si_su_se_so.txt', display: 'Hiragana — sa shi su se so' },
