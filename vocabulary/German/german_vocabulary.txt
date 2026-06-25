@@ -41,3 +41,35 @@ Wo ist der Hauptbahnhof?|Where is the main station?|question
 links|on the left|adverb
 rechts|right|adverb
 geradeaus|straight ahead|adverb
+Und dir?|And you?|phrase
+Es geht mir gut.|I'm doing fine.|phrase
+Wo ist die Toilette?|Where is the restroom?|question
+Kein Problem!|No problem!|phrase
+Es tut mir leid.|I'm sorry.|phrase
+Entschuldigung!|Excuse me!|phrase
+Vielen Dank!|Thank you very much!|phrase
+Ich weiß nicht.|I don't know.|phrase
+Es geht mir nicht gut.|I'm not feeling well.|phrase
+Geht es dir gut?|Are you doing well?|question
+Ich heiße|My name is|phrase
+Es gibt|There is|phrase
+Was|what|question word
+Warum|why|question word
+gut|good|adjective
+sehr|very|adverb
+groß|big|adjective
+viele|many|adjective
+hier|here|adverb
+Nein|no|interjection
+die Kinder|the children|noun
+das Kind|the child|noun
+der Hund|the dog|noun
+die Toilette|the restroom|noun
+das Handy|the cellphone|noun
+die Freundin|the friend (female)|noun
+der Freund|the friend (male)|noun
+der Mann|the man|noun
+Ich spreche|I speak|phrase
+Ich habe|I have|phrase
+Ich bin|I am|phrase
+zu Hause|at home|phrase
