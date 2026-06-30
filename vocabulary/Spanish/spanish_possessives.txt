@@ -11,3 +11,8 @@ el vuestro / la vuestra|yours (plural, Spain)|possessive pronoun
 Mi abuela tiene el pelo gris.|My grandmother has grey hair.|phrase
 Tus llaves son pequeñas.|Your keys are small.|phrase
 Nuestro nieto vive en España.|Our grandson lives in Spain.|phrase
+Mi hermano Javier es muy alto.|My brother Javier is very tall.|phrase
+Mi abuela vive en Málaga.|My grandma lives in Málaga.|phrase
+¿Cómo se llama tu hijo?|What is your son called?|phrase
+David es tu amigo, ¿verdad?|David is your friend, isn't he?|phrase
+Usted se llama... ¿Cuál es su nombre?|So you are...? What's your name?|phrase
