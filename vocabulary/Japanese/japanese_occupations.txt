@@ -6,3 +6,4 @@
 だいがくせい / daigakusei|university student|noun
 こうこうせい / koukousei|high school student|noun
 えいごのせんせい / eigo no sensei|English teacher|noun phrase
+けいさつ / keisatsu|police|noun

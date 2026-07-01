@@ -43,3 +43,4 @@
 ドイツ / Doitsu|Germany|noun
 ブラジル / Burajiru|Brazil|noun
 フランス / Furansu|France|noun
+ちかてつ / chikatetsu|subway|noun
