@@ -1,8 +1,8 @@
-ざ|za|dakuten form of さ (sa → za)
-じ|ji (not "zi"!) — the consonant changes|dakuten form of し (shi → ji)
-ず|zu|dakuten form of す (su → zu)
-ぜ|ze|dakuten form of せ (se → ze)
-ぞ|zo|dakuten form of そ (so → zo)
+ざ|za (as in "za" in "pizza")|dakuten form of さ (sa → za)
+じ|ji (as in "jee")|dakuten form of し (shi → ji); NOT "zi" — the consonant changes
+ず|zu (as in "zoo")|dakuten form of す (su → zu)
+ぜ|ze (as in "zen")|dakuten form of せ (se → ze)
+ぞ|zo (as in "zone")|dakuten form of そ (so → zo)
 かぜ / kaze|wind; breeze|noun; uses か+ぜ
 ざせき / zaseki|seat|noun; uses ざ+せ+き
 くじ / kuji|lottery; lot|noun; uses く+じ
