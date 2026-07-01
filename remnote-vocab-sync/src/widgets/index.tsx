@@ -37,6 +37,7 @@ const LANGUAGES: Record<string, LangConfig> = {
       { filename: 'hiragana_vowels.txt', display: 'Hiragana — Vowels' },
       { filename: 'hiragana_ka_ki_ku_ke_ko.txt', display: 'Hiragana — ka ki ku ke ko' },
       { filename: 'hiragana_sa_si_su_se_so.txt', display: 'Hiragana — sa shi su se so' },
+      { filename: 'hiragana_za_ji_zu_ze_zo.txt', display: 'Hiragana — za ji zu ze zo' },
       { filename: 'hiragana_ta_chi_tsu_te_to.txt', display: 'Hiragana — ta chi tsu te to' },
       { filename: 'katakana_vowels.txt', display: 'Katakana — Vowels' },
       { filename: 'japanese_numbers_0_10.txt', display: 'Numbers 0–10' },
@@ -290,11 +291,7 @@ async function onActivate(plugin: ReactRNPlugin): Promise<void> {
 
   await ping('registerCommand_done');
 
-  const lastSync = await plugin.storage.getLocal<string>(KEY_LAST_SYNC);
-  const elapsed = lastSync ? Date.now() - Number(lastSync) : Infinity;
-  if (elapsed > SYNC_INTERVAL_MS) {
-    setTimeout(() => syncVocabulary(plugin), 3000);
-  }
+  setTimeout(() => syncVocabulary(plugin), 3000);
 }
 
 async function onDeactivate(_plugin: ReactRNPlugin): Promise<void> {}
