@@ -14,4 +14,8 @@
 すき / suki|to like; fond of|adjective (na-adj)
 せんせい / sensei|teacher|noun
 そと / soto|outside; exterior|noun
+あさ / asa|morning|noun; uses あ+さ
+すいえい / suiei|swimming|noun; uses す+い+え+い
+あそこ / asoko|over there; that place (distant from both speaker and listener)|pronoun; uses あ+そ+こ
+When "S" combines with the vowel "i", what sound does it make?|"shi" (not "si") — the consonant changes|grammar fact
 How many hiragana letters are in the s-row (さ し す せ そ)?|5|fact
