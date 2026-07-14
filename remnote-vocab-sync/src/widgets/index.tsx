@@ -204,7 +204,10 @@ async function syncVocabulary(plugin: ReactRNPlugin): Promise<void> {
         const content = await fetchText(url);
         if (content === null) continue;
 
-        const hash = simpleHash(content);
+        // 'flat-v2': cards are no longer tagged (tags created an "All Tagged
+        // Bullets" portal that group members couldn't expand in shared docs).
+        // The salt forces every unit to rebuild once in the new format.
+        const hash = simpleHash(content) + '|flat-v2';
         if (storedHashes[cacheKey] === hash && updatedUnitIds[cacheKey]) {
           continue;
         }
@@ -232,15 +235,15 @@ async function syncVocabulary(plugin: ReactRNPlugin): Promise<void> {
         await unitRem.setParent(langRem._id);
         updatedUnitIds[cacheKey] = unitRem._id;
 
-        // Create flashcards: front text + back text, tagged by language and unit
+        // Create flashcards: front text + back text, flat under the unit doc.
+        // NO tags — tagging created an unexpandable "All Tagged Bullets" portal
+        // in group-shared documents. No parent/child nesting anywhere.
         for (const card of cards) {
           const cardRem = await plugin.rem.createRem();
           if (!cardRem) continue;
           await cardRem.setText(await makeText(card.front));
           await cardRem.setBackText(await makeText(card.back));
           await cardRem.setParent(unitRem._id);
-          await cardRem.addTag(langRem._id);
-          await cardRem.addTag(unitRem._id);
           newCards++;
         }
 
