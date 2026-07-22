@@ -1,0 +1,15 @@
+にほん / Nihon|Japan|proper noun
+アメリカ / Amerika|USA|proper noun
+イギリス / Igirisu|United Kingdom; England|proper noun
+メキシコ / Mekishiko|Mexico|proper noun
+ちゅうごく / Chuugoku|China|proper noun
+ドイツ / Doitsu|Germany|proper noun
+ブラジル / Burajiru|Brazil|proper noun
+フランス / Furansu|France|proper noun
+おおさか / Oosaka|Osaka|proper noun (city)
+どこ / doko|where|question word
+にほんはどこですか / Nihon wa doko desu ka.|Where is Japan?|location question
+きょうとはどこですか / Kyouto wa doko desu ka.|Where is Kyoto?|location question
+かなざわはどこですか / Kanazawa wa doko desu ka.|Where is Kanazawa?|location question
+わたしはにほんじんです / Watashi wa nihonjin desu.|I am Japanese.|phrase using country + じん
+わたしはドイツじんです / Watashi wa Doitsujin desu.|I am German.|phrase using country + じん

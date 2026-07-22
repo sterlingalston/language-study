@@ -30,12 +30,15 @@ const LANGUAGES: Record<string, LangConfig> = {
   Japanese: {
     display: 'Japanese',
     units: [
+      { filename: 'japanese_greetings.txt', display: 'Greetings' },
       { filename: 'japanese_essentials.txt', display: 'Essentials' },
       { filename: 'japanese_introductions.txt', display: 'Introductions' },
+      { filename: 'japanese_countries.txt', display: 'Countries & Locations' },
       { filename: 'japanese_occupations.txt', display: 'Occupations' },
       { filename: 'japanese_adjectives.txt', display: 'Adjectives' },
       { filename: 'hiragana_vowels.txt', display: 'Hiragana — Vowels' },
       { filename: 'hiragana_ka_ki_ku_ke_ko.txt', display: 'Hiragana — ka ki ku ke ko' },
+      { filename: 'hiragana_ga_gi_gu_ge_go.txt', display: 'Hiragana — ga gi gu ge go' },
       { filename: 'hiragana_sa_si_su_se_so.txt', display: 'Hiragana — sa shi su se so' },
       { filename: 'hiragana_za_ji_zu_ze_zo.txt', display: 'Hiragana — za ji zu ze zo' },
       { filename: 'hiragana_ta_chi_tsu_te_to.txt', display: 'Hiragana — ta chi tsu te to' },

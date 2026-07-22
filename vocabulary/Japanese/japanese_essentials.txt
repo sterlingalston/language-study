@@ -1,33 +1,9 @@
-こんにちは / Konnichiwa|Hello|general greeting
-おはよう。 / Ohayou.|Good morning.|casual morning greeting
-おはようございます。 / Ohayou gozaimasu.|Good morning. (formal)|polite morning greeting
-こんばんは。 / Konbanwa.|Good evening.|greeting
-じゃあまた！ / Jaa mata!|See you later!|casual farewell
-さようなら / Sayounara|Goodbye|farewell
-ありがとうございます。 / Arigatou gozaimasu.|Thank you.|polite expression of gratitude
-ありがとう！ / Arigatou!|Thank you!|casual expression of gratitude
-いいえ。 / Iie.|No; no problem (response to thanks); you're welcome.|response/negation
-どうぞ。 / Douzo.|Here you go; please (go ahead).|offering/invitation
-すみません。 / Sumimasen.|Sorry; excuse me.|apology/getting attention
 いえ / ie|house; home|noun
 ひと / hito|person|noun
 みず / mizu|water|noun
 かっこいい / kakkoii|cool; stylish|i-adjective
-そうです。 / Sou desu.|That's right.|affirmation/response
-はい / hai|Yes.|affirmation/response
-どこ / doko|where|question word
-にほん / Nihon|Japan|noun
-アメリカ / Amerika|USA|noun
-イギリス / Igirisu|UK; England|noun
-メキシコ / Mekishiko|Mexico|noun
-ちゅうごく / Chuugoku|China|noun
-はい、そうです。 / Hai, sou desu.|Yes, that's right.|affirmation/response
-にほんはどこですか。 / Nihon wa doko desu ka.|Where is Japan?|question
-きょうとはどこですか。 / Kyouto wa doko desu ka.|Where is Kyoto?|question
-かなざわはどこですか。 / Kanazawa wa doko desu ka.|Where is Kanazawa?|question
-えいが / eiga|movie|noun
 せかい / sekai|world|noun
-おかし / okashi|snacks|noun
+おかし / okashi|snacks; sweets|noun
 すし / sushi|sushi|noun
 かさ / kasa|umbrella|noun
 しか / shika|deer|noun
@@ -36,11 +12,4 @@
 くさい / kusai|smelly|i-adjective
 すこし / sukoshi|a little; a bit|adverb
 さかい / sakai|border|noun
-あそこ / asoko|over there|pronoun
-あさ / asa|morning|noun
-すいえい / suiei|swimming|noun
-おおさか / Oosaka|Osaka|proper noun
-ドイツ / Doitsu|Germany|noun
-ブラジル / Burajiru|Brazil|noun
-フランス / Furansu|France|noun
 ちかてつ / chikatetsu|subway|noun
