@@ -13,3 +13,9 @@
 すこし / sukoshi|a little; a bit|adverb
 さかい / sakai|border|noun
 ちかてつ / chikatetsu|subway|noun
+つち / tsuchi|earth|noun
+とかい / tokai|big city|noun
+かてい / katei|household|noun
+つかう / tsukau|to use|verb
+ちかく / chikaku|near; nearby|noun/adverb
+とけい / tokei|clock|noun
