@@ -229,6 +229,17 @@ async function syncVocabulary(plugin: ReactRNPlugin): Promise<void> {
           const oldUnit = await plugin.rem.findOne(oldUnitId);
           if (oldUnit) await oldUnit.remove();
           updatedUnits++;
+        } else if (!oldUnitId) {
+          // No cached id (plugin storage lost) — remove any same-titled unit
+          // already under this language, otherwise we create a duplicate copy.
+          try {
+            const siblings = await langRem.getChildrenRem();
+            for (const s of siblings) {
+              if (richTextToString(s.text).trim() === unit.display.trim()) {
+                await s.remove();
+              }
+            }
+          } catch { /* best-effort */ }
         }
 
         // Create unit document
