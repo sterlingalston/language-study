@@ -223,31 +223,32 @@ async function syncVocabulary(plugin: ReactRNPlugin): Promise<void> {
 
         if (cards.length === 0) continue;
 
-        // Remove old unit rem if content changed
+        // REUSE THE EXISTING UNIT DOCUMENT IN PLACE — never delete-then-recreate.
+        // RemNote silently refuses to delete a *shared* document, so delete+create
+        // left the old copy behind and added a new one (duplicates every sync).
+        // Reusing the same rem also preserves its group share.
         const oldUnitId = updatedUnitIds[cacheKey];
-        if (oldUnitId && storedHashes[cacheKey] !== hash) {
-          const oldUnit = await plugin.rem.findOne(oldUnitId);
-          if (oldUnit) await oldUnit.remove();
-          updatedUnits++;
-        } else if (!oldUnitId) {
-          // No cached id (plugin storage lost) — remove any same-titled unit
-          // already under this language, otherwise we create a duplicate copy.
+        let unitRem = oldUnitId ? await plugin.rem.findOne(oldUnitId) : null;
+        if (!unitRem) {
           try {
             const siblings = await langRem.getChildrenRem();
-            for (const s of siblings) {
-              if (richTextToString(s.text).trim() === unit.display.trim()) {
-                await s.remove();
-              }
-            }
+            unitRem =
+              siblings.find((s) => richTextToString(s.text).trim() === unit.display.trim()) ?? null;
           } catch { /* best-effort */ }
         }
 
-        // Create unit document
-        const unitRem = await plugin.rem.createRem();
-        if (!unitRem) continue;
-        await unitRem.setText(await makeText(unit.display));
+        if (unitRem) {
+          try {
+            for (const child of await unitRem.getChildrenRem()) await child.remove();
+          } catch { /* best-effort */ }
+          updatedUnits++;
+        } else {
+          unitRem = await plugin.rem.createRem();
+          if (!unitRem) continue;
+          await unitRem.setText(await makeText(unit.display));
+          await unitRem.setParent(langRem._id);
+        }
         await unitRem.setIsDocument(true);
-        await unitRem.setParent(langRem._id);
         updatedUnitIds[cacheKey] = unitRem._id;
 
         // Create flashcards: front text + back text, flat under the unit doc.
