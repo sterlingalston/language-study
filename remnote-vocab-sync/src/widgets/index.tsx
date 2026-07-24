@@ -298,7 +298,15 @@ async function onActivate(plugin: ReactRNPlugin): Promise<void> {
 
   await ping('registerCommand_done');
 
-  setTimeout(() => syncVocabulary(plugin), 3000);
+  // Sync at most once per 24h on load. Syncing on EVERY load (the old behavior)
+  // re-ran the importer constantly and, when unit-id storage was flaky, created
+  // duplicate unit documents. The salt in each unit hash still forces a one-time
+  // rebuild when the format changes.
+  const lastSync = await plugin.storage.getLocal<string>(KEY_LAST_SYNC);
+  const elapsed = lastSync ? Date.now() - Number(lastSync) : Infinity;
+  if (elapsed > SYNC_INTERVAL_MS) {
+    setTimeout(() => syncVocabulary(plugin), 3000);
+  }
 }
 
 async function onDeactivate(_plugin: ReactRNPlugin): Promise<void> {}
