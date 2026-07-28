@@ -16,3 +16,4 @@ Mi abuela vive en Málaga.|My grandma lives in Málaga.|phrase
 ¿Cómo se llama tu hijo?|What is your son called?|phrase
 David es tu amigo, ¿verdad?|David is your friend, isn't he?|phrase
 Usted se llama... ¿Cuál es su nombre?|So you are...? What's your name?|phrase
+Mi amiga Ana vive en Colombia. Su familia es de allí.|My friend Ana lives in Colombia. Her family is from there.|phrase

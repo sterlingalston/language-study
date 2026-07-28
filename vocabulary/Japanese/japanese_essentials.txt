@@ -19,3 +19,16 @@
 つかう / tsukau|to use|verb
 ちかく / chikaku|near; nearby|noun/adverb
 とけい / tokei|clock|noun
+はた / hata|flag|noun
+へそ / heso|belly button|noun
+ほか / hoka|other|noun/adjective
+ひく / hiku|to pull|verb
+だいふく / daifuku|"daifuku" (rice cake filled with bean jam)|noun
+おとこのひと / otoko no hito|a man|noun
+はな / hana|flower|noun
+ふかいはなし / fukai hanashi|a deep conversation|noun
+はいく / haiku|haiku|noun
+こねこ / koneko|kitten|noun
+まる / maru|O; circle (correct; good)|noun
+ばつ / batsu|X; cross (wrong; bad)|noun
+うん / un|yeah (casual "yes", often said while nodding)|interjection
