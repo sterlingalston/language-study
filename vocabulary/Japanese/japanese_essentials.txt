@@ -32,3 +32,20 @@
 まる / maru|O; circle (correct; good)|noun
 ばつ / batsu|X; cross (wrong; bad)|noun
 うん / un|yeah (casual "yes", often said while nodding)|interjection
+うえ / ue|above|noun
+くうこう / kuukou|airport|noun
+いけ / ike|pond|noun
+こい / koi|carp|noun
+いく / iku|to go|verb
+おおきいこえ / ookii koe|loud voice|noun phrase
+すいか / suika|watermelon|noun
+たつ / tatsu|to stand|verb
+なに / nani|what?|interrogative
+にく / niku|meat|noun
+いぬ / inu|dog|noun
+ねこ / neko|cat|noun
+たぬき / tanuki|raccoon dog|noun
+かくに / kakuni|Japanese braised pork dish|noun
+このねこ / kono neko|this cat|noun phrase
+このさかなはおいしいです / kono sakana wa oishii desu|This fish is tasty!|sentence
+おなかすいた / onaka suita|I am hungry|expression
