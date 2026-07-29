@@ -49,3 +49,11 @@
 このねこ / kono neko|this cat|noun phrase
 このさかなはおいしいです / kono sakana wa oishii desu|This fish is tasty!|sentence
 おなかすいた / onaka suita|I am hungry|expression
+おかね / okane|money|noun
+きのう / kinou|yesterday|noun
+おみず / omizu|water (polite)|noun
+おちゃ / ocha|tea|noun
+まっちゃ / maccha|matcha tea|noun
+げんまいちゃ / genmaicha|green tea with roasted rice|noun
+ほうじちゃ / houjicha|roasted tea|noun
+のみもの / nomimono|drinks|noun

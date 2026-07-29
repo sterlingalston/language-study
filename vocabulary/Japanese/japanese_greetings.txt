@@ -12,3 +12,6 @@
 そうです / Sou desu|That's right.|affirmation/response
 はい / Hai|Yes.|affirmation
 しつれいします。/ Shitsurei shimasu.|Goodbye; sorry. (formal)|polite farewell
+おみずはどうですか。/ Omizu wa dou desu ka.|How about some water?|phrase
+おちゃはどうですか。/ Ocha wa dou desu ka.|How about some tea?|phrase
+のみものはどうですか。/ Nomimono wa dou desu ka.|How about some drinks?|phrase
