@@ -1,0 +1,7 @@
+مرحبا / Marhaba|Hello|greeting
+مع السلامة / Ma'a s-salamah|Goodbye|farewell
+ما اسمك؟ / Ma esmuka?|What is your name? (masculine)|question
+ما اسمكِ؟ / Ma esmuki?|What is your name? (feminine)|question
+اسمي / esmi|My name is...|phrase
+و أنتَ؟ / Wa anta?|And you? (masculine)|question
+و أنتِ؟ / Wa anti?|And you? (feminine)|question
