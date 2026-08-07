@@ -4,3 +4,5 @@
 4	Tú eres de Inglaterra.|You're from England.|origin statement
 5	¿Y tú?|And you?|follow-up question
 6	¿Y la tuya?|And yours?|follow-up question
+7	Nosotros somos Silvia y Pedro.|We are Silvia and Pedro.|phrase
+8	¿Vosotros sois españoles?|Are you Spanish?|question

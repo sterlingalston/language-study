@@ -33,3 +33,6 @@
 33	Tengo el pelo negro.|I have black hair.|phrase
 34	Él es rubio.|He is blonde.|phrase
 35	Él tiene el pelo rubio.|He has blonde hair.|phrase
+36	simpático / simpática|nice|adjective (m/f)
+37	serio / seria|serious|adjective (m/f)
+38	trabajador / trabajadora|hard-working|adjective (m/f)
