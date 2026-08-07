@@ -59,3 +59,6 @@
 のみもの / nomimono|drinks|noun
 わたしはすしをたべます。/ Watashi wa sushi wo tabemasu.|I eat sushi.|sentence
 けんくんはみずをのみます。/ Kenkun wa mizu wo nomimasu.|Ken drinks water.|sentence
+いちど / ichido|once; one time; on one occasion|noun/adverb
+なか / naka|inside; in|noun
+にし / nishi|west|noun
