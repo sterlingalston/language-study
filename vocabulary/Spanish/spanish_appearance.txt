@@ -36,3 +36,4 @@
 36	simpático / simpática|nice|adjective (m/f)
 37	serio / seria|serious|adjective (m/f)
 38	trabajador / trabajadora|hard-working|adjective (m/f)
+39	Ellos son muy trabajadores.|They are very hard-working.|phrase

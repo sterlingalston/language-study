@@ -5,3 +5,4 @@
 اسمي / esmi|My name is...|phrase
 و أنتَ؟ / Wa anta?|And you? (masculine)|question
 و أنتِ؟ / Wa anti?|And you? (feminine)|question
+مرحبا، اسمي سارة / Marhaba, esmi Sarah.|Hi, my name is Sarah.|phrase
