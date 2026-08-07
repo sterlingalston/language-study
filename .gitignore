@@ -4,3 +4,6 @@
 !inbox/*.jpeg
 !inbox/*.gif
 !inbox/*.webp
+# Per-machine Claude Code settings — rewritten constantly, which would keep
+# the tree permanently dirty and make demnotes' daily_sync skip its git pull.
+.claude/settings.local.json
