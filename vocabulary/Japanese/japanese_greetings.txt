@@ -18,3 +18,6 @@
 どうも / Doumo|Thank you (the polite and short version)|expression
 いいですね。/ Ii desu ne.|That's good, isn't it? / Sounds good.|phrase
 あ、いいですね。/ A, ii desu ne.|Oh, that's good, isn't it? / Oh, sounds good.|phrase
+すみません、ちょっと。/ Sumimasen, chotto.|Sorry, it is a little (inconvenient for me).|phrase
+いりません。/ Irimasen.|I don't need it.|expression
+すみません、いりません。/ Sumimasen, irimasen.|Sorry, I don't need it.|phrase
