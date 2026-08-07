@@ -15,3 +15,6 @@
 おみずはどうですか。/ Omizu wa dou desu ka.|How about some water?|phrase
 おちゃはどうですか。/ Ocha wa dou desu ka.|How about some tea?|phrase
 のみものはどうですか。/ Nomimono wa dou desu ka.|How about some drinks?|phrase
+どうも / Doumo|Thank you (the polite and short version)|expression
+いいですね。/ Ii desu ne.|That's good, isn't it? / Sounds good.|phrase
+あ、いいですね。/ A, ii desu ne.|Oh, that's good, isn't it? / Oh, sounds good.|phrase

@@ -6,3 +6,4 @@
 و أنتَ؟ / Wa anta?|And you? (masculine)|question
 و أنتِ؟ / Wa anti?|And you? (feminine)|question
 مرحبا، اسمي سارة / Marhaba, esmi Sarah.|Hi, my name is Sarah.|phrase
+مرحبا، اسمي سارة و أنتَ؟ / Marhaba, esmi Sarah wa anta?|Hi, my name is Sarah, and you?|phrase
